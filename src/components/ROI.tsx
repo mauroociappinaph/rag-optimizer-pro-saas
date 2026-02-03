@@ -8,6 +8,7 @@ import {
   Check,
   ArrowRight
 } from 'lucide-react';
+import { ROICalculator } from './ROICalculator';
 
 const benefits = [
   {
@@ -65,6 +66,11 @@ export function ROI() {
             Cada característica está diseñada para generar valor tangible desde el día uno
           </p>
         </motion.div>
+
+        {/* ROI Interactive Calculator */}
+        <div className="mb-24">
+          <ROICalculator />
+        </div>
 
         {/* Benefits Table */}
         <motion.div
