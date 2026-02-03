@@ -2,103 +2,11 @@ import { motion } from 'framer-motion';
 import { 
   Check, 
   X,
-  Zap,
-  Building2,
-  Rocket,
-  ArrowRight,
-  HelpCircle
+  HelpCircle,
+  ArrowRight
 } from 'lucide-react';
 import { useState } from 'react';
-
-const plans = [
-  {
-    name: 'Starter',
-    description: 'Para equipos pequeños que comienzan con RAG',
-    icon: Zap,
-    monthlyPrice: 99,
-    yearlyPrice: 79,
-    features: [
-      { text: 'Hasta 100K queries/mes', included: true },
-      { text: '1 proyecto', included: true },
-      { text: 'Embedding Auto-Selection', included: true },
-      { text: 'Dashboard básico', included: true },
-      { text: 'Semantic Caching', included: false },
-      { text: 'Adaptive Chunking', included: false },
-      { text: 'Reranking Automático', included: false },
-      { text: 'Soporte prioritario', included: false },
-      { text: 'SSO/SAML', included: false },
-    ],
-    cta: 'Comenzar Gratis',
-    popular: false
-  },
-  {
-    name: 'Pro',
-    description: 'Para equipos en crecimiento con necesidades avanzadas',
-    icon: Rocket,
-    monthlyPrice: 399,
-    yearlyPrice: 319,
-    features: [
-      { text: 'Hasta 1M queries/mes', included: true },
-      { text: '5 proyectos', included: true },
-      { text: 'Embedding Auto-Selection', included: true },
-      { text: 'Dashboard avanzado', included: true },
-      { text: 'Semantic Caching', included: true },
-      { text: 'Adaptive Chunking', included: true },
-      { text: 'Reranking Automático', included: true },
-      { text: 'Soporte prioritario', included: false },
-      { text: 'SSO/SAML', included: false },
-    ],
-    cta: 'Comenzar Prueba',
-    popular: true
-  },
-  {
-    name: 'Enterprise',
-    description: 'Para organizaciones con requisitos enterprise',
-    icon: Building2,
-    monthlyPrice: null,
-    yearlyPrice: null,
-    features: [
-      { text: 'Queries ilimitados', included: true },
-      { text: 'Proyectos ilimitados', included: true },
-      { text: 'Embedding Auto-Selection', included: true },
-      { text: 'Dashboard con white-label', included: true },
-      { text: 'Semantic Caching', included: true },
-      { text: 'Adaptive Chunking', included: true },
-      { text: 'Reranking Automático', included: true },
-      { text: 'Soporte 24/7 dedicado', included: true },
-      { text: 'SSO/SAML + RBAC', included: true },
-    ],
-    cta: 'Contactar Ventas',
-    popular: false
-  }
-];
-
-const faqs = [
-  {
-    question: '¿Qué incluye la prueba gratuita?',
-    answer: 'La prueba gratuita de 14 días incluye acceso completo al plan Pro, sin necesidad de tarjeta de crédito. Puedes probar todas las características y decidir si es lo correcto para tu equipo.'
-  },
-  {
-    question: '¿Puedo cambiar de plan en cualquier momento?',
-    answer: 'Sí, puedes actualizar o degradar tu plan en cualquier momento. Los cambios se aplican inmediatamente y ajustamos la facturación de forma prorrateada.'
-  },
-  {
-    question: '¿Cómo se calculan los queries?',
-    answer: 'Un query es cualquier llamada a nuestro API de búsqueda vectorial. Las operaciones de indexación y las llamadas al dashboard no cuentan como queries.'
-  },
-  {
-    question: '¿Ofrecen descuentos para startups?',
-    answer: 'Sí, ofrecemos un 50% de descuento para startups elegibles durante el primer año. Contáctanos para más información.'
-  },
-  {
-    question: '¿Dónde se almacenan mis datos?',
-    answer: 'Ofrecemos regiones en US, EU y Asia-Pacific. Los datos enterprise pueden alojarse en tu propia infraestructura con nuestra solución on-premise.'
-  },
-  {
-    question: '¿Qué métodos de pago aceptan?',
-    answer: 'Aceptamos todas las tarjetas de crédito principales, transferencia bancaria para planes anuales Enterprise, y facturación a 30 días para clientes calificados.'
-  }
-];
+import { PRICING_PLANS, PRICING_FAQS } from '../data/pricing-plans';
 
 export function PreciosPage() {
   const [isYearly, setIsYearly] = useState(true);
@@ -155,7 +63,7 @@ export function PreciosPage() {
       <section className="py-24 bg-slate-950">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-8">
-            {plans.map((plan, index) => (
+            {PRICING_PLANS.map((plan, index) => (
               <motion.div
                 key={plan.name}
                 initial={{ opacity: 0, y: 20 }}
@@ -271,7 +179,7 @@ export function PreciosPage() {
           </motion.div>
 
           <div className="space-y-4">
-            {faqs.map((faq, index) => (
+            {PRICING_FAQS.map((faq, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 10 }}
