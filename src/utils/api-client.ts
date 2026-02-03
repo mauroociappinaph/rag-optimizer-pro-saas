@@ -47,8 +47,26 @@ export async function signUpApi(email: string, password: string): Promise<ApiRes
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.message || 'Sign up failed');
+
+export async function createCheckoutApi(userId: string, planId: string) {
+  const response = await fetch(`${API_BASE_URL}/payments/create-checkout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      userId,
+      planId,
+      successUrl: `${window.location.origin}/#/dashboard?payment=success`,
+      cancelUrl: `${window.location.origin}/#/precios?payment=cancelled`,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to create checkout session');
   }
 
   return response.json();
 }
+

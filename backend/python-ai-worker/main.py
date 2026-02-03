@@ -11,6 +11,7 @@ import logging
 import json
 from security_utils import PIIGuardFilter, scrub_pii
 from director_graph import director_engine
+from skill_executor import skill_executor
 
 # --- Token Cost Matrix (2026 Pricing) ---
 COST_PER_1K_TOKENS = {
@@ -54,6 +55,10 @@ class ChunkingRequest(BaseModel):
     content: str
     strategy: Optional[str] = "adaptive"
     domain: Optional[str] = "general"
+
+class SkillExecutionRequest(BaseModel):
+    skill_id: str
+    content: str
 
 class EmbeddingResponse(BaseModel):
     chunks: List[str]
@@ -123,6 +128,16 @@ async def run_director(request: dict):
         return final_state
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/skills/execute")
+async def execute_skill(request: SkillExecutionRequest):
+    """
+    Execute a global skill using the SkillExecutor.
+    """
+    result = await skill_executor.execute(request.skill_id, request.content)
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+    return result
 
 if __name__ == "__main__":
     import uvicorn

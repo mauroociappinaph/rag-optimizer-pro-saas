@@ -1,16 +1,28 @@
-import { motion } from 'framer-motion';
-import { 
-  Check, 
-  X,
-  HelpCircle,
-  ArrowRight
-} from 'lucide-react';
 import { useState } from 'react';
 import { PRICING_PLANS, PRICING_FAQS } from '../data/pricing-plans';
+import { createCheckoutApi } from '../utils/api-client';
+import { Loader2 } from 'lucide-react';
 
 export function PreciosPage() {
   const [isYearly, setIsYearly] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+  const handleSubscribe = async (planName: string) => {
+    // In a real scenario, we would get the actual user ID from context/auth
+    const mockUserId = 'user_123_mauro'; 
+    
+    setLoadingPlan(planName);
+    try {
+      const { url } = await createCheckoutApi(mockUserId, planName.toLowerCase());
+      window.location.href = url;
+    } catch (error) {
+      console.error('Checkout error:', error);
+      alert('Error al iniciar el pago. Verifica la configuración de Stripe.');
+    } finally {
+      setLoadingPlan(null);
+    }
+  };
 
   return (
     <div className="pt-16">
@@ -129,19 +141,29 @@ export function PreciosPage() {
                   ))}
                 </ul>
                 
-                <button className={`w-full py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
+                <button 
+                  onClick={() => handleSubscribe(plan.name)}
+                  disabled={loadingPlan === plan.name}
+                  className={`w-full py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${
                   plan.popular
-                    ? 'bg-gradient-to-r from-red-600 to-orange-600 text-white hover:from-red-500 hover:to-orange-500'
+                    ? 'bg-gradient-to-r from-red-600 to-orange-600 text-white hover:from-red-500 hover:to-orange-500 shadow-lg shadow-red-500/20'
                     : 'bg-slate-800 text-white hover:bg-slate-700'
-                }`}>
-                  {plan.cta}
-                  <ArrowRight className="w-4 h-4" />
+                } disabled:opacity-50`}>
+                  {loadingPlan === plan.name ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      {plan.cta}
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* Comparison Note */}
       <section className="py-16 bg-slate-900">
