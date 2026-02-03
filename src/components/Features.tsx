@@ -4,7 +4,7 @@ import {
   Gauge,
   Target
 } from 'lucide-react';
-import { FEATURES } from '../constants/features';
+import { FEATURES } from '../data/features';
 
 export function Features() {
   return (

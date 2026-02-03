@@ -1,4 +1,4 @@
-import { Brain, Layers, Scissors, ListOrdered } from 'lucide-react';
+import { Brain, Layers, Scissors, ListOrdered, BarChart3, Zap, Target, Settings, Database, Cpu } from 'lucide-react';
 import { Feature } from '../types';
 
 export const FEATURES: Feature[] = [
@@ -66,5 +66,38 @@ export const FEATURES: Feature[] = [
     impact: '30-40%',
     impactLabel: 'mejora en precisión de ranking',
     gradient: 'from-amber-500 to-yellow-500'
+  }
+];
+
+export const ADDITIONAL_FEATURES = [
+  {
+    icon: BarChart3,
+    title: 'Dashboard en Tiempo Real',
+    description: 'Métricas clave: costos, cache hit rate, latencia y costo por interacción con LLM.'
+  },
+  {
+    icon: Zap,
+    title: 'Recomendaciones de IA',
+    description: 'Sugerencias automáticas como "Cuantizar a int8: Ahorra $3K/mes, +2ms latencia".'
+  },
+  {
+    icon: Target,
+    title: 'Alertas Inteligentes',
+    description: 'Detección temprana de explosiones de costos y anomalías en el sistema.'
+  },
+  {
+    icon: Settings,
+    title: 'Configuración Zero-Touch',
+    description: 'Setup automático que detecta tu infraestructura y aplica configuraciones óptimas.'
+  },
+  {
+    icon: Database,
+    title: 'Multi-tier Storage',
+    description: 'Arquitectura escalable: Hot (Redis), Warm (PostgreSQL), Cold (S3).'
+  },
+  {
+    icon: Cpu,
+    title: 'Auto-Scaling',
+    description: 'Escala automáticamente según demanda para optimizar costos.'
   }
 ];
