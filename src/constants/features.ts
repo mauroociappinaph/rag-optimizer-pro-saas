@@ -1,6 +1,7 @@
 import { Brain, Layers, Scissors, ListOrdered } from 'lucide-react';
+import { Feature } from '../types';
 
-export const FEATURES = [
+export const FEATURES: Feature[] = [
   {
     id: 'embedding',
     icon: Brain,

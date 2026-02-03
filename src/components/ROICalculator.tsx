@@ -9,7 +9,8 @@ import {
   Layers,
   ArrowRight
 } from 'lucide-react';
-import { calculateSavings, OptimizationStrategy, ROIScenario } from '../utils/roi-engine';
+import { calculateSavings } from '../utils/roi-engine';
+import { OptimizationStrategy } from '../types';
 
 const strategies = [
   { id: 'quantization_int8', name: 'Cuantización', icon: Cpu, desc: 'Optimización de memoria' },

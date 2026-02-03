@@ -1,18 +1,4 @@
-export type OptimizationStrategy = 'quantization_int8' | 'vector_caching' | 'llm_reranking_optimization';
-
-export interface ROIScenario {
-  monthlyTokens: number;
-  currentCostPerMillion: number;
-  strategy: OptimizationStrategy;
-  latencyToleranceMs?: number;
-}
-
-export interface ROIResult {
-  currentMonthlyCost: number;
-  projectedMonthlyCost: number;
-  monthlySavings: number;
-  savingsPercentage: number;
-}
+import { ROIScenario, ROIResult, OptimizationStrategy } from '../types';
 
 const STRATEGY_SAVINGS_MULTIPLIER: Record<OptimizationStrategy, number> = {
   quantization_int8: 0.40, // 40% savings

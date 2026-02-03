@@ -1,4 +1,6 @@
-export const USE_CASES = [
+import { UseCase } from '../types';
+
+export const USE_CASES: UseCase[] = [
   {
     id: 'enterprise',
     titulo: 'Enterprise Knowledge Base',

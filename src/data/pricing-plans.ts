@@ -1,6 +1,7 @@
 import { Zap, Building2, Rocket } from 'lucide-react';
+import { PricingPlan, FAQ } from '../types';
 
-export const PRICING_PLANS = [
+export const PRICING_PLANS: PricingPlan[] = [
   {
     name: 'Starter',
     description: 'Para equipos pequeños que comienzan con RAG',
@@ -63,7 +64,7 @@ export const PRICING_PLANS = [
   }
 ];
 
-export const PRICING_FAQS = [
+export const PRICING_FAQS: FAQ[] = [
   {
     question: '¿Qué incluye la prueba gratuita?',
     answer: 'La prueba gratuita de 14 días incluye acceso completo al plan Pro, sin necesidad de tarjeta de crédito.'
