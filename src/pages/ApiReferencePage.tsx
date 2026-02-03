@@ -1,219 +1,7 @@
 import { motion } from 'framer-motion';
-import { Code, Copy, Check, Search, Book, Zap, Database, Brain, BarChart } from 'lucide-react';
+import { Code, Copy, Check, Search } from 'lucide-react';
 import { useState } from 'react';
-
-const endpoints = [
-  {
-    categoria: 'Embeddings',
-    icon: Brain,
-    items: [
-      {
-        method: 'POST',
-        path: '/api/v1/embeddings/optimize',
-        descripcion: 'Optimiza automáticamente el modelo de embedding para tu dataset',
-        params: [
-          { nombre: 'dataset_id', tipo: 'string', requerido: true, descripcion: 'ID del dataset a analizar' },
-          { nombre: 'target_latency', tipo: 'number', requerido: false, descripcion: 'Latencia objetivo en ms' },
-          { nombre: 'quantize', tipo: 'boolean', requerido: false, descripcion: 'Habilitar auto-quantization' }
-        ],
-        response: `{
-  "status": "success",
-  "recommended_model": "all-MiniLM-L6-v2",
-  "quantization": "int8",
-  "estimated_latency": 12,
-  "storage_reduction": "58%"
-}`
-      },
-      {
-        method: 'GET',
-        path: '/api/v1/embeddings/models',
-        descripcion: 'Lista todos los modelos de embedding disponibles',
-        params: [],
-        response: `{
-  "models": [
-    {
-      "id": "all-MiniLM-L6-v2",
-      "dimensions": 384,
-      "max_tokens": 256,
-      "quantization_options": ["fp32", "fp16", "int8"]
-    }
-  ]
-}`
-      },
-      {
-        method: 'POST',
-        path: '/api/v1/embeddings/generate',
-        descripcion: 'Genera embeddings para texto usando el modelo optimizado',
-        params: [
-          { nombre: 'text', tipo: 'string | string[]', requerido: true, descripcion: 'Texto o array de textos' },
-          { nombre: 'model_id', tipo: 'string', requerido: false, descripcion: 'ID del modelo (usa el optimizado por defecto)' }
-        ],
-        response: `{
-  "embeddings": [[0.123, -0.456, ...]],
-  "model": "all-MiniLM-L6-v2",
-  "dimensions": 384,
-  "tokens_used": 42
-}`
-      }
-    ]
-  },
-  {
-    categoria: 'Cache',
-    icon: Database,
-    items: [
-      {
-        method: 'POST',
-        path: '/api/v1/cache/query',
-        descripcion: 'Consulta el cache semántico antes de llamar al LLM',
-        params: [
-          { nombre: 'query', tipo: 'string', requerido: true, descripcion: 'Consulta del usuario' },
-          { nombre: 'similarity_threshold', tipo: 'number', requerido: false, descripcion: 'Umbral de similitud (0-1)' }
-        ],
-        response: `{
-  "hit": true,
-  "cached_response": "La respuesta cacheada...",
-  "similarity": 0.94,
-  "savings": "$0.0023"
-}`
-      },
-      {
-        method: 'POST',
-        path: '/api/v1/cache/store',
-        descripcion: 'Almacena una respuesta en el cache semántico',
-        params: [
-          { nombre: 'query', tipo: 'string', requerido: true, descripcion: 'Consulta original' },
-          { nombre: 'response', tipo: 'string', requerido: true, descripcion: 'Respuesta a cachear' },
-          { nombre: 'ttl', tipo: 'number', requerido: false, descripcion: 'Time-to-live en segundos' }
-        ],
-        response: `{
-  "status": "stored",
-  "cache_key": "sem_abc123",
-  "ttl": 3600,
-  "tier": "hot"
-}`
-      },
-      {
-        method: 'GET',
-        path: '/api/v1/cache/stats',
-        descripcion: 'Obtiene estadísticas del cache',
-        params: [],
-        response: `{
-  "hit_rate": 0.78,
-  "total_queries": 15420,
-  "cache_hits": 12028,
-  "savings_total": "$1,234.56",
-  "tiers": {
-    "hot": { "size": "2.3GB", "entries": 5420 },
-    "warm": { "size": "12GB", "entries": 45000 },
-    "cold": { "size": "89GB", "entries": 234000 }
-  }
-}`
-      }
-    ]
-  },
-  {
-    categoria: 'Chunking',
-    icon: Book,
-    items: [
-      {
-        method: 'POST',
-        path: '/api/v1/chunking/analyze',
-        descripcion: 'Analiza un documento y recomienda estrategia de chunking',
-        params: [
-          { nombre: 'document_id', tipo: 'string', requerido: true, descripcion: 'ID del documento' },
-          { nombre: 'domain', tipo: 'string', requerido: false, descripcion: 'Dominio (code, legal, medical, etc.)' }
-        ],
-        response: `{
-  "recommended_strategy": "semantic",
-  "optimal_chunk_size": 512,
-  "overlap": 64,
-  "estimated_chunks": 42,
-  "domain_detected": "technical_documentation"
-}`
-      },
-      {
-        method: 'POST',
-        path: '/api/v1/chunking/process',
-        descripcion: 'Procesa un documento con la estrategia de chunking optimizada',
-        params: [
-          { nombre: 'document_id', tipo: 'string', requerido: true, descripcion: 'ID del documento' },
-          { nombre: 'strategy', tipo: 'string', requerido: false, descripcion: 'Estrategia a usar' }
-        ],
-        response: `{
-  "status": "processed",
-  "chunks_created": 42,
-  "avg_chunk_size": 487,
-  "processing_time": "1.2s"
-}`
-      }
-    ]
-  },
-  {
-    categoria: 'Reranking',
-    icon: Zap,
-    items: [
-      {
-        method: 'POST',
-        path: '/api/v1/rerank',
-        descripcion: 'Reordena resultados de búsqueda usando el modelo fine-tuned',
-        params: [
-          { nombre: 'query', tipo: 'string', requerido: true, descripcion: 'Consulta del usuario' },
-          { nombre: 'documents', tipo: 'array', requerido: true, descripcion: 'Array de documentos a reordenar' },
-          { nombre: 'top_k', tipo: 'number', requerido: false, descripcion: 'Número de resultados a devolver' }
-        ],
-        response: `{
-  "results": [
-    { "document_id": "doc_123", "score": 0.95, "position": 1 },
-    { "document_id": "doc_456", "score": 0.87, "position": 2 }
-  ],
-  "model": "cross-encoder-custom-v2",
-  "latency_ms": 23
-}`
-      }
-    ]
-  },
-  {
-    categoria: 'Analytics',
-    icon: BarChart,
-    items: [
-      {
-        method: 'GET',
-        path: '/api/v1/analytics/dashboard',
-        descripcion: 'Obtiene métricas del dashboard en tiempo real',
-        params: [
-          { nombre: 'period', tipo: 'string', requerido: false, descripcion: 'Período: 1h, 24h, 7d, 30d' }
-        ],
-        response: `{
-  "period": "24h",
-  "metrics": {
-    "total_queries": 45230,
-    "cache_hit_rate": 0.76,
-    "avg_latency_ms": 89,
-    "llm_cost_saved": "$234.56",
-    "embedding_cost": "$12.34"
-  }
-}`
-      },
-      {
-        method: 'GET',
-        path: '/api/v1/analytics/recommendations',
-        descripcion: 'Obtiene recomendaciones de optimización basadas en IA',
-        params: [],
-        response: `{
-  "recommendations": [
-    {
-      "type": "quantization",
-      "title": "Cuantizar a int8",
-      "impact": "Ahorra $3K/mes",
-      "tradeoff": "+2ms latencia",
-      "confidence": 0.92
-    }
-  ]
-}`
-      }
-    ]
-  }
-];
+import { API_ENDPOINTS } from '../data/api-endpoints';
 
 export function ApiReferencePage() {
   const [busqueda, setBusqueda] = useState('');
@@ -236,7 +24,7 @@ export function ApiReferencePage() {
     }
   };
 
-  const categoriaActual = endpoints.find(e => e.categoria === categoriaActiva);
+  const categoriaActual = API_ENDPOINTS.find(e => e.categoria === categoriaActiva);
 
   return (
     <div className="min-h-screen bg-[#0a0a0b] pt-20">
@@ -288,7 +76,7 @@ export function ApiReferencePage() {
 
               {/* Categorías */}
               <nav className="space-y-1">
-                {endpoints.map((endpoint) => (
+                {API_ENDPOINTS.map((endpoint) => (
                   <button
                     key={endpoint.categoria}
                     onClick={() => setCategoriaActiva(endpoint.categoria)}

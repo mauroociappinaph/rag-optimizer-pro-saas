@@ -170,7 +170,7 @@ export function ComunidadPage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {canales.map((canal, index) => (
+            {COMMUNITY_CHANNELS.map((canal, index) => (
               <motion.a
                 key={canal.nombre}
                 href={canal.link}
@@ -217,7 +217,7 @@ export function ComunidadPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            {eventos.map((evento, index) => (
+            {COMMUNITY_EVENTS.map((evento, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}

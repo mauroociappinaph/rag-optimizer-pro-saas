@@ -8,87 +8,7 @@ import {
   Tag,
   Calendar
 } from 'lucide-react';
-
-const releases = [
-  {
-    version: '1.4.2',
-    date: '15 Enero 2025',
-    type: 'patch',
-    highlights: [
-      { type: 'fix', text: 'Corregido memory leak en semantic cache con alta concurrencia' },
-      { type: 'fix', text: 'Fix en quantization automática para modelos ONNX' },
-      { type: 'improvement', text: 'Mejora del 15% en latencia de búsqueda vectorial' }
-    ]
-  },
-  {
-    version: '1.4.0',
-    date: '8 Enero 2025',
-    type: 'minor',
-    highlights: [
-      { type: 'feature', text: 'Nuevo motor de Adaptive Chunking con soporte para 12 idiomas' },
-      { type: 'feature', text: 'Integración nativa con LlamaIndex 0.10+' },
-      { type: 'improvement', text: 'Dashboard: nuevas métricas de ROI en tiempo real' },
-      { type: 'improvement', text: 'Soporte para Redis Cluster con auto-sharding' },
-      { type: 'fix', text: 'Corregido problema de encoding con caracteres Unicode' }
-    ]
-  },
-  {
-    version: '1.3.5',
-    date: '20 Diciembre 2024',
-    type: 'patch',
-    highlights: [
-      { type: 'security', text: 'Actualización de dependencias de seguridad' },
-      { type: 'fix', text: 'Fix en autenticación SSO con Azure AD' },
-      { type: 'fix', text: 'Corregido cálculo de cache TTL en modo multi-tier' }
-    ]
-  },
-  {
-    version: '1.3.0',
-    date: '5 Diciembre 2024',
-    type: 'minor',
-    highlights: [
-      { type: 'feature', text: 'Nuevo sistema de Reranking Automático con cross-encoders' },
-      { type: 'feature', text: 'API de métricas para integración con Datadog y Grafana' },
-      { type: 'feature', text: 'Modo de fine-tuning para reranker en dominio específico' },
-      { type: 'improvement', text: 'Reducción del 40% en uso de memoria para embeddings int8' },
-      { type: 'improvement', text: 'Nuevo SDK para TypeScript/JavaScript' }
-    ]
-  },
-  {
-    version: '1.2.0',
-    date: '15 Noviembre 2024',
-    type: 'minor',
-    highlights: [
-      { type: 'feature', text: 'Multi-tier caching: Hot (Redis) → Warm (PostgreSQL) → Cold (S3)' },
-      { type: 'feature', text: 'Calculadora de ROI integrada en el dashboard' },
-      { type: 'improvement', text: 'Soporte para modelos de embedding personalizados' },
-      { type: 'improvement', text: 'Nuevas alertas de tendencia para costos' }
-    ]
-  },
-  {
-    version: '1.1.0',
-    date: '1 Noviembre 2024',
-    type: 'minor',
-    highlights: [
-      { type: 'feature', text: 'Semantic Cache con predicción de hit probability' },
-      { type: 'feature', text: 'Integración con LangChain Callbacks' },
-      { type: 'improvement', text: 'Mejora del 25% en precisión de auto-selección de embeddings' },
-      { type: 'fix', text: 'Corregido timeout en operaciones batch grandes' }
-    ]
-  },
-  {
-    version: '1.0.0',
-    date: '15 Octubre 2024',
-    type: 'major',
-    highlights: [
-      { type: 'feature', text: '🎉 Lanzamiento inicial de RAG Optimizer Pro' },
-      { type: 'feature', text: 'Motor de Embedding Auto-Selection con CNN + RL' },
-      { type: 'feature', text: 'Auto-quantization: fp32 → fp16 → int8' },
-      { type: 'feature', text: 'Dashboard de observabilidad en tiempo real' },
-      { type: 'feature', text: 'Integración nativa con RedisVL' }
-    ]
-  }
-];
+import { RELEASES } from '../data/changelog';
 
 const getTypeIcon = (type: string) => {
   switch (type) {
@@ -181,7 +101,7 @@ export function ChangelogPage() {
             <div className="absolute left-[23px] top-0 bottom-0 w-px bg-gradient-to-b from-purple-500 via-blue-500 to-slate-800" />
 
             <div className="space-y-12">
-              {releases.map((release, index) => (
+              {RELEASES.map((release, index) => (
                 <motion.div
                   key={release.version}
                   initial={{ opacity: 0, x: -20 }}

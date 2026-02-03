@@ -64,6 +64,61 @@ export interface UseCase {
   testimonial: Testimonial;
 }
 
+// --- API Reference Types ---
+export interface ApiParam {
+  nombre: string;
+  tipo: string;
+  requerido: boolean;
+  descripcion: string;
+}
+
+export interface ApiEndpointItem {
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  path: string;
+  descripcion: string;
+  params: ApiParam[];
+  response: string;
+}
+
+export interface ApiCategory {
+  categoria: string;
+  icon: LucideIcon;
+  items: ApiEndpointItem[];
+}
+
+// --- Community Types ---
+export interface CommunityChannel {
+  nombre: string;
+  descripcion: string;
+  icon: LucideIcon;
+  color: GradientColor;
+  link: string;
+  miembros: string;
+  activo: boolean;
+}
+
+export interface CommunityEvent {
+  tipo: string;
+  titulo: string;
+  fecha: string;
+  hora: string;
+  speakers: string[];
+  registrados: number;
+}
+
+// --- Changelog Types ---
+export interface ReleaseHighlight {
+  type: 'feature' | 'fix' | 'improvement' | 'security';
+  text: string;
+}
+
+export interface Release {
+  version: string;
+  date: string;
+  type: 'major' | 'minor' | 'patch';
+  highlights: ReleaseHighlight[];
+}
+
 // --- ROI Engine Types ---
 export type OptimizationStrategy = 'quantization_int8' | 'vector_caching' | 'llm_reranking_optimization';
 
