@@ -6,14 +6,30 @@ import numpy as np
 from redisvl.extensions.llmcache import SemanticCache
 from redisvl.utils.vectorize import HFTextVectorizer
 from dotenv import load_dotenv
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+import logging
+from security_utils import PIIGuardFilter, scrub_pii
 
 load_dotenv()
+
+# --- Security Hardening: PII Guard Setup ---
+# Setup logging with PII Scrubber Filter (Priority 3)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("uvicorn")
+logger.addFilter(PIIGuardFilter())
 
 app = FastAPI(title="THE DUDE - AI Worker (True Engine)", version="1.0.0")
 
 # --- Sovereign Intelligence Setup ---
 # HFTextVectorizer ensures local embedding generation (No cloud dependency)
 vectorizer = HFTextVectorizer(model_id="sentence-transformers/all-MiniLM-L6-v2")
+
+# Initialize Splitters based on Domain (Industry Standard 2026)
+domain_splitters = {
+    "legal": RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100, separators=["\n\n", "\n", ".", " "]),
+    "code": RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50, separators=["class ", "def ", "\n\n", "\n", " "]),
+    "general": RecursiveCharacterTextSplitter(chunk_size=400, chunk_overlap=40, separators=["\n\n", "\n", ". ", " "])
+}
 
 # Initialize Semantic Cache (Standard: Redis 6.2+ or 7.0+)
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
@@ -52,13 +68,10 @@ async def process_document(request: ChunkingRequest):
             "cached": true
         }
 
-    # 2. Real Adaptive Chunking Logic (Initial Version)
+    # 2. Real Adaptive Chunking Logic (Industrial v7.4)
     # Using recursive character splitting based on domain
-    text = request.content
-    chunk_size = 500 if request.domain == "legal" else 300
-    
-    # Simple semantic splitting (can be improved with DSPy later)
-    chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]
+    splitter = domain_splitters.get(request.domain, domain_splitters["general"])
+    chunks = splitter.split_text(request.content)
     
     # 3. Vectorize (Sovereign Inference)
     try:

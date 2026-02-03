@@ -5,6 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
 import { loginApi } from '../../utils/api-client';
 import { useNavigate } from 'react-router-dom';
+import { analytics } from '../../utils/analytics';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -42,6 +43,7 @@ export function LoginForm() {
       const password = formData.get('password') as string;
 
       try {
+        analytics.track('auth_login_attempt', { email });
         const result = await loginApi(email, password);
         if (result.error) {
           return { error: result.error.message };
@@ -49,6 +51,7 @@ export function LoginForm() {
         // Store token in localStorage or context
         if (result.data?.session.access_token) {
           localStorage.setItem('auth_token', result.data.session.access_token);
+          analytics.identify(email, { auth_method: 'standard' });
         }
         navigate('/dashboard');
         return { success: true };

@@ -5,6 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { Mail, Lock, Loader2, ArrowRight, User } from 'lucide-react';
 import { signUpApi } from '../../utils/api-client';
 import { useNavigate } from 'react-router-dom';
+import { analytics } from '../../utils/analytics';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -47,6 +48,7 @@ export function SignupForm() {
       }
 
       try {
+        analytics.track('auth_signup_attempt', { email });
         const result = await signUpApi(email, password);
         if (result.error) {
           return { error: result.error.message };

@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useROIStore } from '../store/useROIStore';
 import { captureLeadApi } from '../utils/api-client';
+import { analytics } from '../utils/analytics';
 
 const strategies = [
   { id: 'quantization_int8', name: 'Cuantización', icon: Cpu, desc: 'Optimización de memoria' },
@@ -27,6 +28,8 @@ export function ROICalculator() {
   const handleCapture = async () => {
     if (!email) return;
     setStatus('loading');
+    analytics.track('roi_sim_capture_click', { email, strategy, tokens });
+    
     try {
       await captureLeadApi({
         email,
@@ -35,11 +38,23 @@ export function ROICalculator() {
         strategy
       });
       setStatus('success');
+      analytics.track('roi_sim_capture_success', { strategy, tokens, savings: results.monthlySavings });
+      analytics.identify(email, { last_roi_strategy: strategy, last_roi_tokens: tokens });
     } catch (error) {
       console.error(error);
       setStatus('error');
       setTimeout(() => setStatus('idle'), 3000);
     }
+  };
+
+  const handleTokenChange = (val: number) => {
+    setTokens(val);
+    analytics.track('roi_sim_change', { type: 'tokens', value: val });
+  };
+
+  const handleStrategyChange = (sId: typeof strategy) => {
+    setStrategy(sId);
+    analytics.track('roi_sim_change', { type: 'strategy', value: sId });
   };
 
   return (
@@ -68,7 +83,7 @@ export function ROICalculator() {
               max="5000" 
               step="10"
               value={tokens}
-              onChange={(e) => setTokens(Number(e.target.value))}
+              onChange={(e) => handleTokenChange(Number(e.target.value))}
               className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
             />
             <div className="flex justify-between mt-2 text-xs text-slate-500 uppercase tracking-widest">
@@ -84,7 +99,7 @@ export function ROICalculator() {
               {strategies.map((s) => (
                 <button
                   key={s.id}
-                  onClick={() => setStrategy(s.id)}
+                  onClick={() => handleStrategyChange(s.id as any)}
                   className={`flex items-center gap-4 p-4 rounded-2xl border transition-all text-left ${
                     strategy === s.id 
                     ? 'bg-indigo-500/10 border-indigo-500/50 text-white shadow-lg shadow-indigo-500/10' 
