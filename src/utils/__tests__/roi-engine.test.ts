@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { calculateSavings, ROIScenario } from '../roi-engine';
+import { calculateSavings } from '../roi-engine';
+import { ROIScenario } from '../../types';
 
 describe('ROI Engine - calculateSavings', () => {
   it('should calculate accurate savings for a standard 1B tokens scenario with quantization', () => {

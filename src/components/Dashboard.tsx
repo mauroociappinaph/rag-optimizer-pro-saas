@@ -9,39 +9,42 @@ import {
   Lightbulb,
   BarChart3
 } from 'lucide-react';
-
-const metrics = [
-  { label: 'Costo Embedding', value: '$0.42', change: '-23%', icon: DollarSign, color: 'text-green-400' },
-  { label: 'Cache Hit Rate', value: '82.4%', change: '+15%', icon: Activity, color: 'text-blue-400' },
-  { label: 'Latencia Promedio', value: '45ms', change: '-31%', icon: Clock, color: 'text-purple-400' },
-  { label: 'Costo/Interacción', value: '$0.003', change: '-52%', icon: Zap, color: 'text-orange-400' },
-];
-
-const recommendations = [
-  { 
-    type: 'optimization',
-    icon: Lightbulb,
-    title: 'Cuantizar embeddings a int8',
-    description: 'Ahorra $3,200/mes con solo +2ms de latencia adicional',
-    impact: '+$3.2K/mes'
-  },
-  { 
-    type: 'warning',
-    icon: AlertTriangle,
-    title: 'Explosión de costos detectada',
-    description: 'Consultas analíticas aumentaron 340% ayer a las 14:00',
-    impact: 'Revisar'
-  },
-  { 
-    type: 'trend',
-    icon: TrendingUp,
-    title: 'Nuevo modelo disponible',
-    description: 'text-embedding-3-small ofrece mejor relación calidad/precio',
-    impact: '-18% costo'
-  },
-];
+import { useROIStore } from '../store/useROIStore';
 
 export function Dashboard() {
+  const { results, strategy } = useROIStore();
+
+  const metrics = [
+    { label: 'Ahorro Proyectado', value: `$${results.monthlySavings.toLocaleString()}`, change: `-${results.savingsPercentage}%`, icon: DollarSign, color: 'text-green-400' },
+    { label: 'Cache Hit Rate', value: strategy === 'vector_caching' ? '85.0%' : '12.4%', change: strategy === 'vector_caching' ? '+72%' : '+2%', icon: Activity, color: 'text-blue-400' },
+    { label: 'Latencia Promedio', value: strategy === 'quantization_int8' ? '12ms' : '45ms', change: strategy === 'quantization_int8' ? '-73%' : '-5%', icon: Clock, color: 'text-purple-400' },
+    { label: 'Costo/Interacción', value: `$${(results.projectedMonthlyCost / 1000000).toFixed(4)}`, change: '-52%', icon: Zap, color: 'text-orange-400' },
+  ];
+
+  const recommendations = [
+    { 
+      type: 'optimization',
+      icon: Lightbulb,
+      title: 'Cuantizar embeddings a int8',
+      description: `Ahorra $${(results.currentMonthlyCost * 0.4).toLocaleString()}/mes con solo +2ms de latencia adicional`,
+      impact: '+$3.2K/mes'
+    },
+    { 
+      type: 'warning',
+      icon: AlertTriangle,
+      title: 'Explosión de costos detectada',
+      description: 'Consultas analíticas aumentaron 340% ayer a las 14:00',
+      impact: 'Revisar'
+    },
+    { 
+      type: 'trend',
+      icon: TrendingUp,
+      title: 'Nuevo modelo disponible',
+      description: 'text-embedding-3-small ofrece mejor relación calidad/precio',
+      impact: '-18% costo'
+    },
+  ];
+
   return (
     <section id="dashboard" className="py-24 bg-gradient-to-b from-slate-950 to-slate-900">
       <div className="max-w-7xl mx-auto px-6">
@@ -82,7 +85,7 @@ export function Dashboard() {
               </div>
               <div className="flex items-center gap-2 text-slate-400 text-sm">
                 <Activity className="w-4 h-4 text-green-400" />
-                <span>En vivo</span>
+                <span>En vivo (Simulado)</span>
               </div>
             </div>
 

@@ -1,16 +1,14 @@
-import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { 
   Zap, 
-  TrendingUp, 
   DollarSign, 
   Cpu, 
   Database, 
   Layers,
   ArrowRight
 } from 'lucide-react';
-import { calculateSavings } from '../utils/roi-engine';
-import { OptimizationStrategy } from '../types';
+import { useROIStore } from '../store/useROIStore';
 
 const strategies = [
   { id: 'quantization_int8', name: 'Cuantización', icon: Cpu, desc: 'Optimización de memoria' },
@@ -19,16 +17,7 @@ const strategies = [
 ] as const;
 
 export function ROICalculator() {
-  const [tokens, setTokens] = useState(500); // En millones
-  const [strategy, setStrategy] = useState<OptimizationStrategy>('quantization_int8');
-
-  const result = useMemo(() => {
-    return calculateSavings({
-      monthlyTokens: tokens * 1000000,
-      currentCostPerMillion: 0.15, // Precio base estimado
-      strategy
-    });
-  }, [tokens, strategy]);
+  const { tokens, strategy, results, setTokens, setStrategy } = useROIStore();
 
   return (
     <div className="grid lg:grid-cols-2 gap-8 items-start">
@@ -106,11 +95,11 @@ export function ROICalculator() {
               <h4 className="text-slate-400 font-medium mb-1">Ahorro Mensual Estimado</h4>
               <div className="text-5xl font-black text-white flex items-center gap-2">
                 <DollarSign className="w-8 h-8 text-green-400" />
-                {result.monthlySavings.toLocaleString()}
+                {results.monthlySavings.toLocaleString()}
               </div>
             </div>
             <div className="px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-sm font-bold animate-pulse">
-              -{result.savingsPercentage}%
+              -{results.savingsPercentage}%
             </div>
           </div>
 
@@ -118,7 +107,7 @@ export function ROICalculator() {
             <div className="p-6 rounded-2xl bg-slate-800/30 border border-slate-700/50">
               <div className="flex justify-between text-sm mb-2">
                 <span className="text-slate-400">Costo Actual</span>
-                <span className="text-slate-300 font-mono">${result.currentMonthlyCost.toLocaleString()}</span>
+                <span className="text-slate-300 font-mono">${results.currentMonthlyCost.toLocaleString()}</span>
               </div>
               <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                 <div className="h-full bg-slate-600 w-full"></div>
@@ -128,12 +117,12 @@ export function ROICalculator() {
             <div className="p-6 rounded-2xl bg-indigo-500/5 border border-indigo-500/20">
               <div className="flex justify-between text-sm mb-2">
                 <span className="text-indigo-400 font-bold">Costo con DUDE</span>
-                <span className="text-white font-mono font-bold">${result.projectedMonthlyCost.toLocaleString()}</span>
+                <span className="text-white font-mono font-bold">${results.projectedMonthlyCost.toLocaleString()}</span>
               </div>
               <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
                 <motion.div 
                   initial={{ width: '100%' }}
-                  animate={{ width: `${100 - result.savingsPercentage}%` }}
+                  animate={{ width: `${100 - results.savingsPercentage}%` }}
                   className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
                 ></motion.div>
               </div>

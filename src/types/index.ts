@@ -106,6 +106,20 @@ export interface CommunityEvent {
   registrados: number;
 }
 
+export interface CommunityContributor {
+  nombre: string;
+  avatar: string;
+  contribuciones: number;
+  pais: string;
+}
+
+export interface CommunityResource {
+  titulo: string;
+  tipo: string;
+  descargas: string;
+  icon: LucideIcon;
+}
+
 // --- Changelog Types ---
 export interface ReleaseHighlight {
   type: 'feature' | 'fix' | 'improvement' | 'security';

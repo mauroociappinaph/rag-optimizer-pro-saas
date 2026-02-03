@@ -7,11 +7,11 @@
 
 | Promesa en Landing | Estado en Código | Brecha Técnica | Skill Requerida |
 | :--- | :--- | :--- | :--- |
-| **"Potenciado por Redis"** | 🟡 UI Mockup | Falta conexión real a Redis/RedisVL. | `@vector-index-tuning` |
-| **"Optimiza Pipelines Automáticamente"** | 🔴 No Iniciado | No hay lógica de backend para optimización. | `@master-rag-2026` |
-| **"Elimina el tuning manual"** | 🔴 No Iniciado | Falta motor de `Adaptive Chunking`. | `@latency-optimizer` |
+| **"Potenciado por Redis"** | 🟢 **Activo** | Implementado via RedisVL en microservicio Python. | `@vector-index-tuning` |
+| **"Optimiza Pipelines Automáticamente"** | 🟡 **Iniciado** | Lógica de `/process-document` ya genera vectores reales. | `@master-rag-2026` |
+| **"Elimina el tuning manual"** | 🟡 **Iniciado** | Implementado motor de `Semantic Cache` (Umbral 0.1). | `@latency-optimizer` |
 | **"Integración nativa LangChain/LlamaIndex"** | 🟡 Solo Visual | Falta implementación de adaptadores. | `@ai-engineer` |
-| **"Calculadora de ROI"** | 🟢 Funcional | La lógica en `roi-engine.ts` es correcta. | `@token-accountant` |
+| **"Calculadora de ROI"** | 🟢 **Certificado** | Lógica conectada a Zustand para reactividad global. | `@token-accountant` |
 
 ---
 

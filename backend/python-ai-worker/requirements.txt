@@ -1,1 +1,10 @@
-fastapi\nuvicorn\npydantic\nopenai\npython-dotenv
+fastapi
+uvicorn
+pydantic
+openai
+python-dotenv
+redisvl>=0.3.0
+dspy-ai
+sentence-transformers
+redis
+numpy

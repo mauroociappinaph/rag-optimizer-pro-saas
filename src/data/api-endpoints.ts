@@ -1,4 +1,4 @@
-import { Brain, Database, Book, Zap, BarChart } from 'lucide-react';
+import { Brain, Database } from 'lucide-react';
 import { ApiCategory } from '../types';
 
 export const API_ENDPOINTS: ApiCategory[] = [

@@ -1,4 +1,3 @@
-import { Building2, Stethoscope, Scale, ShoppingCart, GraduationCap, Headphones } from 'lucide-react';
 import { UseCase } from '../types';
 
 export const USE_CASES: UseCase[] = [
