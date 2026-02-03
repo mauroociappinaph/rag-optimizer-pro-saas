@@ -8,7 +8,8 @@ import {
   TrendingUp,
   AlertTriangle,
   Lightbulb,
-  BarChart3
+  BarChart3,
+  ShieldCheck
 } from 'lucide-react';
 import { useROIStore } from '../store/useROIStore';
 import { getTelemetryStatsApi } from '../utils/api-client';
@@ -62,6 +63,13 @@ export function Dashboard() {
       change: stats ? 'Acumulado' : '-52%',
       icon: Zap,
       color: 'text-orange-400'
+    },
+    {
+      label: 'Autocorrecciones (AI)',
+      value: stats ? stats.healed_count : '24',
+      change: stats ? 'Neutralizadas' : '+12',
+      icon: ShieldCheck,
+      color: 'text-cyan-400'
     },
   ];
 
