@@ -8,8 +8,16 @@ from redisvl.utils.vectorize import HFTextVectorizer
 from dotenv import load_dotenv
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import logging
+import json
 from security_utils import PIIGuardFilter, scrub_pii
 from director_graph import director_engine
+
+# --- Token Cost Matrix (2026 Pricing) ---
+COST_PER_1K_TOKENS = {
+    "embedding": 0.0001,  # MiniLM is local ($0), but we log potential cloud savings
+    "input": 0.002,      # Simulated GPT-4o input cost
+    "output": 0.006      # Simulated GPT-4o output cost
+}
 
 load_dotenv()
 
@@ -77,6 +85,13 @@ async def process_document(request: ChunkingRequest):
     # 3. Vectorize (Sovereign Inference)
     try:
         vectors = vectorizer.embed_many(chunks)
+        # Estimate tokens (roughly: 1 word = 1.3 tokens)
+        token_count = sum(len(c.split()) for c in chunks) * 1.3
+        cost_saved = (token_count / 1000) * COST_PER_1K_TOKENS["embedding"]
+
+        # Log to "Financial Vault" (Local log or Redis)
+        logger.info(f"[[FINANCIAL_AUDIT]] Saved {cost_saved}$ by local embedding for {token_count} tokens.")
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Embedding error: {str(e)}")
 
@@ -84,7 +99,9 @@ async def process_document(request: ChunkingRequest):
         "chunks": chunks,
         "vectors": vectors.tolist() if isinstance(vectors, np.ndarray) else vectors,
         "model_used": "all-MiniLM-L6-v2 (Local)",
-        "cached": False
+        "cached": False,
+        "tokens_processed": token_count,
+        "cost_saved": cost_saved
     }
 
 @app.post("/director/run")
