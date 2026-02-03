@@ -149,3 +149,26 @@ export interface ROIResult {
   monthlySavings: number;
   savingsPercentage: number;
 }
+
+// --- Admin & Real-time Types ---
+export type SkillStatus = 'executing' | 'completed' | 'idle';
+
+export interface AdminMessage {
+  role: 'user' | 'agent';
+  content: string;
+  timestamp: Date;
+}
+
+export interface ActiveSkill {
+  id: string;
+  name: string;
+  status: SkillStatus;
+  color: string;
+}
+
+export interface SystemHealthMetric {
+  label: string;
+  status: 'connected' | 'healthy' | 'optimized' | 'error';
+  value: string;
+}
+

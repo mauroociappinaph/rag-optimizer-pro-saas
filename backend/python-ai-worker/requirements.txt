@@ -9,3 +9,4 @@ sentence-transformers
 redis
 numpy
 langchain-text-splitters
+langgraph

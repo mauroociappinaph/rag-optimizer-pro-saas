@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 import logging
 from security_utils import PIIGuardFilter, scrub_pii
+from director_graph import director_engine
 
 load_dotenv()
 
@@ -72,7 +73,7 @@ async def process_document(request: ChunkingRequest):
     # Using recursive character splitting based on domain
     splitter = domain_splitters.get(request.domain, domain_splitters["general"])
     chunks = splitter.split_text(request.content)
-    
+
     # 3. Vectorize (Sovereign Inference)
     try:
         vectors = vectorizer.embed_many(chunks)
@@ -85,6 +86,26 @@ async def process_document(request: ChunkingRequest):
         "model_used": "all-MiniLM-L6-v2 (Local)",
         "cached": False
     }
+
+@app.post("/director/run")
+async def run_director(request: dict):
+    """
+    Run the Intelligent Engine Director (LangGraph).
+    """
+    try:
+        # Initialize state from request
+        initial_state = {
+            "task": request.get("task", "general_audit"),
+            "plan": [],
+            "results": [],
+            "status": "started",
+            "next_step": "planner"
+        }
+
+        final_state = director_engine.invoke(initial_state)
+        return final_state
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
