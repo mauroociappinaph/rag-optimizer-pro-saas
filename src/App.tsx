@@ -19,6 +19,9 @@ import { PrivacidadPage } from './pages/PrivacidadPage';
 import { TerminosPage } from './pages/TerminosPage';
 import { SeguridadPage } from './pages/SeguridadPage';
 import { CookiesPage } from './pages/CookiesPage';
+import { LoginPage } from './pages/LoginPage';
+import { SignupPage } from './pages/SignupPage';
+import { DashboardPage } from './pages/DashboardPage';
 
 export function App() {
   return (
@@ -28,6 +31,9 @@ export function App() {
         <Routes>
           {/* Páginas principales */}
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/producto" element={<ProductoPage />} />
           <Route path="/caracteristicas" element={<CaracteristicasPage />} />
           <Route path="/precios" element={<PreciosPage />} />

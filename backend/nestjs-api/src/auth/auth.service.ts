@@ -16,6 +16,24 @@ export class AuthService {
       throw new BadRequestException(error.message);
     }
 
+    if (data.user) {
+      // Sincronización manual con la tabla profiles (si no hay trigger)
+      const { error: profileError } = await this.supabaseService
+        .getClient()
+        .from('profiles')
+        .insert([
+          {
+            uid: data.user.id,
+            role: 'user',
+            created_at: new Date().toISOString(),
+          },
+        ]);
+
+      if (profileError) {
+        console.error('Error al crear perfil:', profileError);
+      }
+    }
+
     return {
       data: {
         user: {

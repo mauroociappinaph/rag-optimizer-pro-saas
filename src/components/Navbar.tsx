@@ -132,12 +132,12 @@ export function Navbar() {
 
             {/* CTA Buttons */}
             <div className="hidden md:flex items-center gap-4">
-              <button className="text-slate-400 hover:text-white transition-colors text-sm font-medium">
+              <Link to="/login" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">
                 Iniciar Sesión
-              </button>
-              <button className="px-4 py-2 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium text-sm rounded-lg hover:from-red-500 hover:to-orange-500 transition-all">
+              </Link>
+              <Link to="/signup" className="px-4 py-2 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium text-sm rounded-lg hover:from-red-500 hover:to-orange-500 transition-all">
                 Comenzar Gratis
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -215,12 +215,20 @@ export function Navbar() {
               </div>
               
               <div className="pt-4 border-t border-slate-800 space-y-3">
-                <button className="w-full text-slate-400 hover:text-white transition-colors font-medium text-left">
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full text-slate-400 hover:text-white transition-colors font-medium text-left"
+                >
                   Iniciar Sesión
-                </button>
-                <button className="w-full px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium rounded-lg">
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium rounded-lg text-center"
+                >
                   Comenzar Gratis
-                </button>
+                </Link>
               </div>
             </div>
           </motion.div>
