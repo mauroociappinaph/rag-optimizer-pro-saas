@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Zap, 
-  DollarSign, 
-  Cpu, 
-  Database, 
+import {
+  Zap,
+  DollarSign,
+  Cpu,
+  Database,
   Layers,
   ArrowRight,
   CheckCircle,
@@ -29,17 +29,26 @@ export function ROICalculator() {
     if (!email) return;
     setStatus('loading');
     analytics.track('roi_sim_capture_click', { email, strategy, tokens });
-    
+
     try {
       await captureLeadApi({
         email,
         monthly_tokens: tokens * 1000000,
-        estimated_savings: results.monthlySavings,
-        strategy
-      });
+        estimated_savings: results.savingsPercentage,
+        metadata: {
+          strategy: strategy,
+          projected_savings: results.monthlySavings,
+          current_cost: results.currentMonthlyCost,
+          source: 'roi_calculator_pro_v2'
+        }
+      } as any);
       setStatus('success');
       analytics.track('roi_sim_capture_success', { strategy, tokens, savings: results.monthlySavings });
-      analytics.identify(email, { last_roi_strategy: strategy, last_roi_tokens: tokens });
+      analytics.identify(email, {
+        last_roi_strategy: strategy,
+        last_roi_tokens: tokens,
+        estimated_savings_pct: results.savingsPercentage
+      });
     } catch (error) {
       console.error(error);
       setStatus('error');
@@ -60,7 +69,7 @@ export function ROICalculator() {
   return (
     <div className="grid lg:grid-cols-2 gap-8 items-start">
       {/* Controles */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
         className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 p-8 rounded-3xl shadow-2xl"
@@ -77,10 +86,10 @@ export function ROICalculator() {
               <label className="text-slate-400 font-medium">Volumen Mensual de Tokens</label>
               <span className="text-indigo-400 font-bold">{tokens}M</span>
             </div>
-            <input 
-              type="range" 
-              min="10" 
-              max="5000" 
+            <input
+              type="range"
+              min="10"
+              max="5000"
               step="10"
               value={tokens}
               onChange={(e) => handleTokenChange(Number(e.target.value))}
@@ -101,8 +110,8 @@ export function ROICalculator() {
                   key={s.id}
                   onClick={() => handleStrategyChange(s.id as any)}
                   className={`flex items-center gap-4 p-4 rounded-2xl border transition-all text-left ${
-                    strategy === s.id 
-                    ? 'bg-indigo-500/10 border-indigo-500/50 text-white shadow-lg shadow-indigo-500/10' 
+                    strategy === s.id
+                    ? 'bg-indigo-500/10 border-indigo-500/50 text-white shadow-lg shadow-indigo-500/10'
                     : 'bg-slate-800/50 border-slate-700 text-slate-400 hover:border-slate-600'
                   }`}
                 >
@@ -121,7 +130,7 @@ export function ROICalculator() {
       </motion.div>
 
       {/* Visualización de Resultados */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: 20 }}
         whileInView={{ opacity: 1, x: 0 }}
         className="relative group"
@@ -158,7 +167,7 @@ export function ROICalculator() {
                 <span className="text-white font-mono font-bold">${results.projectedMonthlyCost.toLocaleString()}</span>
               </div>
               <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                <motion.div 
+                <motion.div
                   initial={{ width: '100%' }}
                   animate={{ width: `${100 - results.savingsPercentage}%` }}
                   className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
@@ -170,7 +179,7 @@ export function ROICalculator() {
           {/* Lead Capture Form */}
           <div className="mt-8 space-y-4">
             {status === 'success' ? (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="p-4 bg-green-500/10 border border-green-500/20 rounded-2xl flex items-center gap-3 text-green-400"
@@ -181,7 +190,7 @@ export function ROICalculator() {
             ) : (
               <>
                 <div className="relative">
-                  <input 
+                  <input
                     type="email"
                     placeholder="Ingresa tu email corporativo"
                     value={email}
@@ -190,7 +199,7 @@ export function ROICalculator() {
                     className="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-2xl text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
                   />
                 </div>
-                <button 
+                <button
                   onClick={handleCapture}
                   disabled={!email || status === 'loading'}
                   className="w-full group flex items-center justify-center gap-3 px-8 py-4 bg-white text-slate-950 font-bold rounded-2xl hover:bg-indigo-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"

@@ -11,14 +11,12 @@ import logging
 import json
 from security_utils import PIIGuardFilter, scrub_pii
 from director_graph import director_engine
-from skill_executor import skill_executor
+from skill_engine import skill_executor_instance as skill_executor
+from token_accountant import accountant
+from evaluator_engine import evaluator
 
-# --- Token Cost Matrix (2026 Pricing) ---
-COST_PER_1K_TOKENS = {
-    "embedding": 0.0001,  # MiniLM is local ($0), but we log potential cloud savings
-    "input": 0.002,      # Simulated GPT-4o input cost
-    "output": 0.006      # Simulated GPT-4o output cost
-}
+# --- Token Cost Matrix (Deprecating local matrix for Global Skill) ---
+# COST_PER_1K_TOKENS is now handled by TokenAccountant
 
 load_dotenv()
 
@@ -92,7 +90,8 @@ async def process_document(request: ChunkingRequest):
         vectors = vectorizer.embed_many(chunks)
         # Estimate tokens (roughly: 1 word = 1.3 tokens)
         token_count = sum(len(c.split()) for c in chunks) * 1.3
-        cost_saved = (token_count / 1000) * COST_PER_1K_TOKENS["embedding"]
+        # Saved cost equivalent to GPT-4o embedding price ($0.10 per 1M tokens)
+        cost_saved = (token_count / 1_000_000) * 0.10
 
         # Log to "Financial Vault" (Local log or Redis)
         logger.info(f"[[FINANCIAL_AUDIT]] Saved {cost_saved}$ by local embedding for {token_count} tokens.")
@@ -100,13 +99,19 @@ async def process_document(request: ChunkingRequest):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Embedding error: {str(e)}")
 
+    # Cost tracking (Industrial)
+    real_cost = accountant.calculate_cost("gpt-4o", token_count, 0)
+
+    logger.info(f"[[SOVEREIGN_RAG]] Document processed. Saved ${cost_saved} (Audit Cost: ${real_cost})")
+
     return {
         "chunks": chunks,
         "vectors": vectors.tolist() if isinstance(vectors, np.ndarray) else vectors,
         "model_used": "all-MiniLM-L6-v2 (Local)",
         "cached": False,
         "tokens_processed": token_count,
-        "cost_saved": cost_saved
+        "cost_saved": cost_saved,
+        "real_cost": real_cost
     }
 
 @app.post("/director/run")

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { PRICING_PLANS, PRICING_FAQS } from '../data/pricing-plans';
 import { createCheckoutApi } from '../utils/api-client';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Check, X, ArrowRight, HelpCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function PreciosPage() {
   const [isYearly, setIsYearly] = useState(true);
@@ -10,15 +11,25 @@ export function PreciosPage() {
 
   const handleSubscribe = async (planName: string) => {
     // In a real scenario, we would get the actual user ID from context/auth
-    const mockUserId = 'user_123_mauro'; 
-    
+    const mockUserId = 'user_123_mauro';
+    const planId = planName.toLowerCase();
+
+    if (planId === 'enterprise') {
+      window.location.href = '#/contacto';
+      return;
+    }
+
     setLoadingPlan(planName);
     try {
-      const { url } = await createCheckoutApi(mockUserId, planName.toLowerCase());
-      window.location.href = url;
+      const { url } = await createCheckoutApi(mockUserId, planId);
+      if (url) {
+        window.location.href = url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
     } catch (error) {
       console.error('Checkout error:', error);
-      alert('Error al iniciar el pago. Verifica la configuración de Stripe.');
+      alert('Error al iniciar el pago. Verifica la configuración de Stripe y el servidor API.');
     } finally {
       setLoadingPlan(null);
     }
@@ -29,7 +40,7 @@ export function PreciosPage() {
       {/* Hero */}
       <section className="relative py-24 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 overflow-hidden">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        
+
         <div className="relative max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -44,7 +55,7 @@ export function PreciosPage() {
             <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-10">
               Elige el plan que mejor se adapte a tu equipo. Sin costos ocultos, sin sorpresas.
             </p>
-            
+
             {/* Toggle */}
             <div className="inline-flex items-center gap-4 p-1 bg-slate-800/50 rounded-xl">
               <button
@@ -83,8 +94,8 @@ export function PreciosPage() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 className={`relative rounded-3xl p-8 ${
-                  plan.popular 
-                    ? 'bg-gradient-to-br from-red-500/10 to-orange-500/10 border-2 border-red-500/50' 
+                  plan.popular
+                    ? 'bg-gradient-to-br from-red-500/10 to-orange-500/10 border-2 border-red-500/50'
                     : 'bg-slate-900/50 border border-slate-800'
                 }`}
               >
@@ -95,11 +106,11 @@ export function PreciosPage() {
                     </span>
                   </div>
                 )}
-                
+
                 <div className="mb-6">
                   <div className={`inline-flex p-3 rounded-xl ${
-                    plan.popular 
-                      ? 'bg-gradient-to-br from-red-500 to-orange-500' 
+                    plan.popular
+                      ? 'bg-gradient-to-br from-red-500 to-orange-500'
                       : 'bg-slate-800'
                   } mb-4`}>
                     <plan.icon className="w-6 h-6 text-white" />
@@ -107,7 +118,7 @@ export function PreciosPage() {
                   <h3 className="text-2xl font-bold text-white">{plan.name}</h3>
                   <p className="text-slate-400 mt-1">{plan.description}</p>
                 </div>
-                
+
                 <div className="mb-8">
                   {plan.monthlyPrice ? (
                     <div className="flex items-baseline gap-2">
@@ -125,7 +136,7 @@ export function PreciosPage() {
                     </p>
                   )}
                 </div>
-                
+
                 <ul className="space-y-4 mb-8">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-center gap-3">
@@ -140,8 +151,8 @@ export function PreciosPage() {
                     </li>
                   ))}
                 </ul>
-                
-                <button 
+
+                <button
                   onClick={() => handleSubscribe(plan.name)}
                   disabled={loadingPlan === plan.name}
                   className={`w-full py-3 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${

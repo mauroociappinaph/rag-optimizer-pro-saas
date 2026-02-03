@@ -172,3 +172,20 @@ export interface SystemHealthMetric {
   value: string;
 }
 
+// --- Blog Types ---
+export interface Post {
+  id: number;
+  title: string;
+  excerpt: string;
+  image: string;
+  category: string;
+  author: string;
+  date: string;
+  readTime: string;
+}
+
+export interface FeaturedPost extends Post {
+  authorImage: string;
+}
+
+

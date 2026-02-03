@@ -47,6 +47,11 @@ export async function signUpApi(email: string, password: string): Promise<ApiRes
 
   if (!response.ok) {
     const errorData = await response.json();
+    throw new Error(errorData.message || 'Sign up failed');
+  }
+
+  return response.json();
+}
 
 export async function createCheckoutApi(userId: string, planId: string) {
   const response = await fetch(`${API_BASE_URL}/payments/create-checkout`, {
@@ -65,6 +70,21 @@ export async function createCheckoutApi(userId: string, planId: string) {
   if (!response.ok) {
     const errorData = await response.json();
     throw new Error(errorData.message || 'Failed to create checkout session');
+  }
+
+  return response.json();
+}
+
+export async function getTelemetryStatsApi() {
+  const response = await fetch(`${API_BASE_URL}/telemetry/stats`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch telemetry stats');
   }
 
   return response.json();

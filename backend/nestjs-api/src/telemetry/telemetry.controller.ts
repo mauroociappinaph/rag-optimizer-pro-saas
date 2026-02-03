@@ -9,4 +9,9 @@ export class TelemetryController {
   async track(@Body() body: { event: string; properties?: any; userId?: string }) {
     return this.telemetryService.trackEvent(body.event, body.properties, body.userId);
   }
+
+  @Post('stats') // Usamos POST para mayor flexibilidad en el futuro aunque sea de lectura (Estándar DUDE)
+  async getStats() {
+    return this.telemetryService.getStats();
+  }
 }
