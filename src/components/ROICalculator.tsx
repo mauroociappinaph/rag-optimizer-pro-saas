@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Zap, 
@@ -6,9 +6,12 @@ import {
   Cpu, 
   Database, 
   Layers,
-  ArrowRight
+  ArrowRight,
+  CheckCircle,
+  Loader2
 } from 'lucide-react';
 import { useROIStore } from '../store/useROIStore';
+import { captureLeadApi } from '../utils/api-client';
 
 const strategies = [
   { id: 'quantization_int8', name: 'Cuantización', icon: Cpu, desc: 'Optimización de memoria' },
@@ -18,6 +21,26 @@ const strategies = [
 
 export function ROICalculator() {
   const { tokens, strategy, results, setTokens, setStrategy } = useROIStore();
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleCapture = async () => {
+    if (!email) return;
+    setStatus('loading');
+    try {
+      await captureLeadApi({
+        email,
+        monthly_tokens: tokens * 1000000,
+        estimated_savings: results.monthlySavings,
+        strategy
+      });
+      setStatus('success');
+    } catch (error) {
+      console.error(error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 3000);
+    }
+  };
 
   return (
     <div className="grid lg:grid-cols-2 gap-8 items-start">
@@ -129,10 +152,46 @@ export function ROICalculator() {
             </div>
           </div>
 
-          <button className="mt-8 w-full group flex items-center justify-center gap-3 px-8 py-4 bg-white text-slate-950 font-bold rounded-2xl hover:bg-indigo-50 transition-all">
-            Obtener este Ahorro Ahora
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </button>
+          {/* Lead Capture Form */}
+          <div className="mt-8 space-y-4">
+            {status === 'success' ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-4 bg-green-500/10 border border-green-500/20 rounded-2xl flex items-center gap-3 text-green-400"
+              >
+                <CheckCircle className="w-6 h-6" />
+                <span className="font-medium">¡Ahorro desbloqueado! Te contactaremos pronto.</span>
+              </motion.div>
+            ) : (
+              <>
+                <div className="relative">
+                  <input 
+                    type="email"
+                    placeholder="Ingresa tu email corporativo"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={status === 'loading'}
+                    className="w-full px-6 py-4 bg-slate-800 border border-slate-700 rounded-2xl text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
+                  />
+                </div>
+                <button 
+                  onClick={handleCapture}
+                  disabled={!email || status === 'loading'}
+                  className="w-full group flex items-center justify-center gap-3 px-8 py-4 bg-white text-slate-950 font-bold rounded-2xl hover:bg-indigo-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === 'loading' ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <>
+                      Obtener este Ahorro Ahora
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </>
+                  )}
+                </button>
+              </>
+            )}
+          </div>
         </div>
       </motion.div>
     </div>
