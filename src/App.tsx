@@ -22,6 +22,7 @@ import { CookiesPage } from './pages/CookiesPage';
 import { LoginPage } from './pages/LoginPage';
 import { SignupPage } from './pages/SignupPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { AdminCommandCenter } from './pages/AdminCommandCenter';
 
 export function App() {
   return (
@@ -34,6 +35,7 @@ export function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/admin/command-center" element={<AdminCommandCenter />} />
           <Route path="/producto" element={<ProductoPage />} />
           <Route path="/caracteristicas" element={<CaracteristicasPage />} />
           <Route path="/precios" element={<PreciosPage />} />

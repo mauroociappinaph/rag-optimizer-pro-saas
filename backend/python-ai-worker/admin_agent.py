@@ -5,12 +5,14 @@ from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 from langchain_core.tools import tool
 
+from realtime_reporter import report_skill_activation
+
 # --- Tools for the Admin Specialist (Skills Integration) ---
 
 @tool
-def get_system_health():
+async def get_system_health():
     """Returns real-time health metrics of Redis, Supabase, and AI Worker latency."""
-    # Logic will integrate corporate-health-auditor skill
+    await report_skill_activation("observability-engineer")
     return {
         "redis_status": "healthy",
         "avg_latency": "42ms",
@@ -19,9 +21,9 @@ def get_system_health():
     }
 
 @tool
-def audit_token_costs(period: str = "last_24h"):
+async def audit_token_costs(period: str = "last_24h"):
     """Audits LLM token consumption and ROI generated in the specified period."""
-    # Logic will integrate token-accountant skill
+    await report_skill_activation("token-accountant")
     return {
         "total_tokens": "1.2M",
         "total_cost": "$0.18",
@@ -30,9 +32,9 @@ def audit_token_costs(period: str = "last_24h"):
     }
 
 @tool
-def query_central_brain(query: str):
+async def query_central_brain(query: str):
     """Searches the Central Vector Memory (dude-central-brain) for learned patterns."""
-    # Logic will integrate master-rag-2026 skill
+    await report_skill_activation("master-rag-2026")
     return [
         {"node": "Optimization-Strategy-v7.4", "relevance": 0.98},
         {"node": "User-Behavior-Trend", "relevance": 0.85}
