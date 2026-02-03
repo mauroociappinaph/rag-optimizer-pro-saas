@@ -1,0 +1,185 @@
+import { motion } from 'framer-motion';
+import { 
+  Activity, 
+  DollarSign, 
+  Clock, 
+  Zap,
+  TrendingUp,
+  AlertTriangle,
+  Lightbulb,
+  BarChart3
+} from 'lucide-react';
+
+const metrics = [
+  { label: 'Costo Embedding', value: '$0.42', change: '-23%', icon: DollarSign, color: 'text-green-400' },
+  { label: 'Cache Hit Rate', value: '82.4%', change: '+15%', icon: Activity, color: 'text-blue-400' },
+  { label: 'Latencia Promedio', value: '45ms', change: '-31%', icon: Clock, color: 'text-purple-400' },
+  { label: 'Costo/Interacción', value: '$0.003', change: '-52%', icon: Zap, color: 'text-orange-400' },
+];
+
+const recommendations = [
+  { 
+    type: 'optimization',
+    icon: Lightbulb,
+    title: 'Cuantizar embeddings a int8',
+    description: 'Ahorra $3,200/mes con solo +2ms de latencia adicional',
+    impact: '+$3.2K/mes'
+  },
+  { 
+    type: 'warning',
+    icon: AlertTriangle,
+    title: 'Explosión de costos detectada',
+    description: 'Consultas analíticas aumentaron 340% ayer a las 14:00',
+    impact: 'Revisar'
+  },
+  { 
+    type: 'trend',
+    icon: TrendingUp,
+    title: 'Nuevo modelo disponible',
+    description: 'text-embedding-3-small ofrece mejor relación calidad/precio',
+    impact: '-18% costo'
+  },
+];
+
+export function Dashboard() {
+  return (
+    <section id="dashboard" className="py-24 bg-gradient-to-b from-slate-950 to-slate-900">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-sm font-medium mb-6">
+            <BarChart3 className="w-4 h-4" />
+            Observabilidad
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Dashboard en Tiempo Real
+          </h2>
+          <p className="text-xl text-slate-400 max-w-3xl mx-auto">
+            Panel centralizado para monitorear la salud y eficiencia de tu pipeline RAG
+          </p>
+        </motion.div>
+
+        {/* Dashboard Preview */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-orange-500/20 to-yellow-500/20 blur-3xl opacity-30" />
+          
+          <div className="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700 rounded-3xl p-6 md:p-10 shadow-2xl">
+            {/* Dashboard Header */}
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+              </div>
+              <div className="flex items-center gap-2 text-slate-400 text-sm">
+                <Activity className="w-4 h-4 text-green-400" />
+                <span>En vivo</span>
+              </div>
+            </div>
+
+            {/* Metrics Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {metrics.map((metric, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <metric.icon className={`w-5 h-5 ${metric.color}`} />
+                    <span className="text-xs text-green-400 font-medium">{metric.change}</span>
+                  </div>
+                  <div className="text-2xl font-bold text-white mb-1">{metric.value}</div>
+                  <div className="text-sm text-slate-400">{metric.label}</div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Chart Placeholder */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <div className="bg-slate-800/30 border border-slate-700/50 rounded-2xl p-6">
+                <h4 className="text-white font-semibold mb-4">Costos por Hora (24h)</h4>
+                <div className="flex items-end justify-between h-32 gap-1">
+                  {[35, 42, 28, 65, 52, 38, 45, 72, 58, 48, 35, 42].map((height, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 bg-gradient-to-t from-red-500 to-orange-400 rounded-t opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
+                      style={{ height: `${height}%` }}
+                    />
+                  ))}
+                </div>
+              </div>
+              
+              <div className="bg-slate-800/30 border border-slate-700/50 rounded-2xl p-6">
+                <h4 className="text-white font-semibold mb-4">Cache Hit Rate (7d)</h4>
+                <div className="flex items-end justify-between h-32 gap-2">
+                  {[65, 68, 72, 75, 78, 81, 82].map((height, i) => (
+                    <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                      <div
+                        className="w-full bg-gradient-to-t from-blue-500 to-cyan-400 rounded-t opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
+                        style={{ height: `${height}%` }}
+                      />
+                      <span className="text-xs text-slate-500">{['L', 'M', 'X', 'J', 'V', 'S', 'D'][i]}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Recommendations */}
+            <div>
+              <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-yellow-400" />
+                Recomendaciones de IA
+              </h4>
+              <div className="space-y-3">
+                {recommendations.map((rec, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center justify-between bg-slate-800/30 border border-slate-700/50 rounded-xl p-4 hover:bg-slate-800/50 transition-colors cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`p-2 rounded-lg ${
+                        rec.type === 'warning' ? 'bg-yellow-500/10 text-yellow-400' :
+                        rec.type === 'trend' ? 'bg-blue-500/10 text-blue-400' :
+                        'bg-green-500/10 text-green-400'
+                      }`}>
+                        <rec.icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-white font-medium">{rec.title}</p>
+                        <p className="text-sm text-slate-400">{rec.description}</p>
+                      </div>
+                    </div>
+                    <span className={`text-sm font-semibold ${
+                      rec.type === 'warning' ? 'text-yellow-400' :
+                      'text-green-400'
+                    }`}>
+                      {rec.impact}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
