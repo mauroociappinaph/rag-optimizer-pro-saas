@@ -77,7 +77,7 @@ async def process_document(request: ChunkingRequest):
             "chunks": [cached_response[0]["response"]],
             "vectors": [],
             "model_used": "cache-hit",
-            "cached": true
+            "cached": True
         }
 
     # 2. Real Adaptive Chunking Logic (Industrial v7.4)

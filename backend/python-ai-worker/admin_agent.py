@@ -50,7 +50,7 @@ async def query_central_brain(query: str):
 
 # Initialize the Admin Specialist
 llm = ChatOpenAI(model="gpt-4o", temperature=0) # Or local llama via Ollama
-tools = [get_system_health, audit_token_costs, query_central_brain]
+tools = [get_system_health, audit_token_costs, query_central_brain, run_agent_audit]
 
 admin_specialist = create_react_agent(
     llm, 

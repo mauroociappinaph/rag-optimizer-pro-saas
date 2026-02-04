@@ -10,3 +10,8 @@ redis
 numpy
 langchain-text-splitters
 langgraph
+langchain-openai
+langchain-ollama
+langchain-core
+python-socketio
+aiohttp

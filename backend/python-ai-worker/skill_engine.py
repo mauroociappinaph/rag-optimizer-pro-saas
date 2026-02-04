@@ -66,7 +66,7 @@ class SkillExecutor:
             # Agent Evaluation (Quality Gate)
             evaluation = await evaluator.evaluate_response(
                 context=instructions,
-                question=human_input,
+                query=human_input,
                 response=response.content
             )
 

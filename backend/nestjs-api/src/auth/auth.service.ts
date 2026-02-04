@@ -30,8 +30,11 @@ export class AuthService {
         ]);
 
       if (profileError) {
-        console.error('Error al crear perfil:', profileError);
+        console.error('[[AUTH_SYNC_ERROR]] Critical failure creating user profile:', profileError);
+      } else {
+        console.log(`[[AUTH_SYNC]] Profile created successfully for: ${data.user.id}`);
       }
+
     }
 
     return {

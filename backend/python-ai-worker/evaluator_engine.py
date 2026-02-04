@@ -15,7 +15,7 @@ class AgentEvaluator:
     def __init__(self, model_name: str = "gpt-4o"):
         self.llm = ChatOpenAI(model=model_name, temperature=0)
         
-    async def evaluate_rag_output(self, query: str, context: str, response: str) -> Dict[str, Any]:
+    async def evaluate_response(self, query: str, context: str, response: str) -> Dict[str, Any]:
         """
         Runs a dual-metric evaluation:
         1. Faithfulness: Is the answer derived ONLY from the context?
@@ -76,9 +76,10 @@ class AgentEvaluator:
                 "status": "certified",
                 "auditor_notes": "Response is highly grounded in local vector memory."
             }
-        except Exception as e:
-            logger.error(f"Evaluation engine failed: {e}")
-            return {"error": str(e), "status": "failed"}
-
-# Singleton Evaluator
-evaluator_engine = AgentEvaluator()
+                except Exception as e:
+                    logger.error(f"Evaluation engine failed: {e}")
+                    return {"error": str(e), "status": "failed"}
+        
+        # Singleton Evaluator
+        evaluator = AgentEvaluator()
+        

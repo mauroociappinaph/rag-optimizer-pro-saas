@@ -18,7 +18,11 @@ async def run_eval_tests():
 
     print("--- ⚖️ Behavioral Test: Agent Evaluation ---")
     
-    results = await evaluator.evaluate_rag_output(query, context, response)
+    results = await evaluator.evaluate_response(
+        query=query,
+        context=context,
+        response=response
+    )
     
     if "metrics" in results:
         print(f"📊 Faithfulness Score: {results['metrics']['faithfulness']}")
