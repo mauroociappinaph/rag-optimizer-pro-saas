@@ -188,7 +188,7 @@ export function Navbar() {
                     href={link.href}
                     onClick={() => setIsOpen(false)}
                     className={`block py-2 font-medium transition-colors ${
-                      location.pathname === link.href
+                      pathname === link.href
                         ? 'text-white'
                         : 'text-slate-400 hover:text-white'
                     }`}
@@ -207,7 +207,7 @@ export function Navbar() {
                     href={link.href}
                     onClick={() => setIsOpen(false)}
                     className={`block py-2 font-medium transition-colors ${
-                      location.pathname === link.href
+                      pathname === link.href
                         ? 'text-white'
                         : 'text-slate-400 hover:text-white'
                     }`}
