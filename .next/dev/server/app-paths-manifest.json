@@ -1,6 +1,5 @@
 {
-  "/caracteristicas/page": "app/caracteristicas/page.js",
-  "/page": "app/page.js",
-  "/precios/page": "app/precios/page.js",
-  "/producto/page": "app/producto/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/page": "app/page.js"
 }
