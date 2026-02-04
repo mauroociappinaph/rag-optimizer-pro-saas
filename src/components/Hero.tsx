@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Zap, Database, Brain, ArrowRight } from 'lucide-react';
 
@@ -6,10 +8,10 @@ export function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-red-950">
       {/* Background Effects */}
       <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-      
+
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/20 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-      
+
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -22,7 +24,7 @@ export function Hero() {
             Potenciado por Redis
           </span>
         </motion.div>
-        
+
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -36,17 +38,17 @@ export function Hero() {
           <br />
           Automáticamente
         </motion.h1>
-        
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-10"
         >
-          Plataforma SaaS que elimina el tuning manual para ingenieros de ML. 
+          Plataforma SaaS que elimina el tuning manual para ingenieros de ML.
           Integración nativa con RedisVL, LangChain y LlamaIndex.
         </motion.p>
-        
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,7 +63,7 @@ export function Hero() {
             Ver Demo
           </button>
         </motion.div>
-        
+
         {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -83,7 +85,7 @@ export function Hero() {
           ))}
         </motion.div>
       </div>
-      
+
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}

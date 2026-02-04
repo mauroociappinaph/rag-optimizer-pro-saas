@@ -1,5 +1,7 @@
+'use client';
+
 import { motion } from 'framer-motion';
-import { 
+import {
   Cpu,
   Gauge,
   Target
@@ -41,7 +43,7 @@ export function Features() {
               <div className="relative bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-8 md:p-10 hover:border-slate-700 transition-all overflow-hidden">
                 {/* Background gradient */}
                 <div className={`absolute top-0 right-0 w-96 h-96 bg-gradient-to-br ${feature.gradient} opacity-5 blur-3xl group-hover:opacity-10 transition-opacity`} />
-                
+
                 <div className="relative grid md:grid-cols-3 gap-8">
                   {/* Left: Title and description */}
                   <div className="md:col-span-2">
@@ -54,16 +56,16 @@ export function Features() {
                         <p className="text-slate-400">{feature.subtitle}</p>
                       </div>
                     </div>
-                    
+
                     <div className="mb-6">
                       <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-lg text-sm text-slate-300">
                         <Cpu className="w-3 h-3" />
                         {feature.tech}
                       </span>
                     </div>
-                    
+
                     <p className="text-slate-300 mb-6">{feature.description}</p>
-                    
+
                     <ul className="space-y-3">
                       {feature.features.map((item, i) => (
                         <li key={i} className="flex items-start gap-3 text-slate-400">
@@ -73,7 +75,7 @@ export function Features() {
                       ))}
                     </ul>
                   </div>
-                  
+
                   {/* Right: Impact */}
                   <div className="flex items-center justify-center">
                     <div className={`p-8 rounded-2xl bg-gradient-to-br ${feature.gradient} bg-opacity-10`}>

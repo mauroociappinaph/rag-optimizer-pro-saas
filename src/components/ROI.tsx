@@ -1,8 +1,10 @@
+'use client';
+
 import { motion } from 'framer-motion';
-import { 
-  TrendingUp, 
-  Database, 
-  DollarSign, 
+import {
+  TrendingUp,
+  Database,
+  DollarSign,
   Zap,
   Target,
   Check,
@@ -53,7 +55,7 @@ export function ROI() {
             <div>Impacto</div>
             <div></div>
           </div>
-          
+
           {/* Rows */}
           {benefits.map((item, index) => (
             <motion.div
@@ -92,7 +94,7 @@ export function ROI() {
           className="relative text-center"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 via-orange-500/20 to-yellow-500/20 blur-3xl opacity-50" />
-          
+
           <div className="relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-sm border border-slate-700 rounded-3xl p-10 md:p-16">
             <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
               ¿Listo para optimizar tu RAG?

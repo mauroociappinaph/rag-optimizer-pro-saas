@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { PRICING_PLANS, PRICING_FAQS } from '../data/pricing-plans';
 import { createCheckoutApi } from '../utils/api-client';
@@ -15,7 +17,7 @@ export function PreciosPage() {
     const planId = planName.toLowerCase();
 
     if (planId === 'enterprise') {
-      window.location.href = '#/contacto';
+      window.location.href = '/contacto';
       return;
     }
 

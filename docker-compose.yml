@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # --- API Gateway (NestJS) ---
+  api-gateway:
+    build:
+      context: ./backend/nestjs-api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - PYTHON_WORKER_URL=http://ai-worker:8000
+    depends_on:
+      ai-worker:
+        condition: service_healthy
+    networks:
+      - dude-internal
+
+  # --- AI Engine Specialist (FastAPI) ---
+  ai-worker:
+    build:
+      context: ./backend/python-ai-worker
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_URL=redis://redis-cache:6379
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - NESTJS_URL=http://api-gateway:3000
+    depends_on:
+      - redis-cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - dude-internal
+
+  # --- Semantic Cache (Redis Stack) ---
+  redis-cache:
+    image: redis/redis-stack-server:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - dude-internal
+
+networks:
+  dude-internal:
+    driver: bridge
+
+volumes:
+  redis-data:

@@ -1,11 +1,13 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { io, Socket } from 'socket.io-client';
-import { 
-  Bot, 
-  Send, 
-  ShieldCheck, 
-  Zap, 
+import {
+  Bot,
+  Send,
+  ShieldCheck,
+  Zap,
   Terminal,
   Cpu,
   DollarSign,
@@ -17,8 +19,8 @@ import { HealthMonitor } from '../components/admin/HealthMonitor';
 import { ActiveSkill, AdminMessage, SystemHealthMetric } from '../types';
 
 export function AdminCommandCenter() {
-  const [messages, setMessages] = useState<AdminMessage[]>([{ 
-    role: 'agent', 
+  const [messages, setMessages] = useState<AdminMessage[]>([{
+    role: 'agent',
     content: 'Bienvenido, Mauro. Conexión segura establecida. El sistema reporta una salud del 98% y el ROI es positivo. ¿En qué puedo ayudarte hoy?',
     timestamp: new Date()
   }]);
@@ -39,24 +41,24 @@ export function AdminCommandCenter() {
     const [isThinking, setIsThinking] = useState(false);
     const [confidenceScore, setConfidenceScore] = useState(0.95);
     const chatEndRef = useRef<HTMLDivElement>(null);
-  
+
     useEffect(() => {
       const newSocket = io('http://localhost:3000/admin');
       setSocket(newSocket);
-  
+
       newSocket.on('agent_response', (msg: AdminMessage) => {
         setIsThinking(false);
         setMessages(prev => [...prev, { ...msg, timestamp: new Date(msg.timestamp) }]);
       });
-  
+
       newSocket.on('telemetry_event', (data: any) => {
         if (data.event === 'agent_evaluation' && data.properties?.score) {
           setConfidenceScore(data.properties.score);
         }
       });
-  
+
       newSocket.on('skill_activated', (data: { skill: string, status: string }) => {
-  
+
       setActiveSkills(prev => prev.map(s => s.name === data.skill ? { ...s, status: data.status as any } : s));
       if (data.status === 'executing') {
         setTimeout(() => setActiveSkills(prev => prev.map(s => s.name === data.skill ? { ...s, status: 'idle' } : s)), 4000);
@@ -78,7 +80,7 @@ export function AdminCommandCenter() {
   return (
     <div className="min-h-screen bg-[#020617] text-white pt-20 px-6 pb-10">
       <div className="max-w-[1600px] mx-auto grid lg:grid-cols-4 gap-6 h-[calc(100vh-120px)]">
-        
+
         {/* Left Sidebar: Extracted Molecules */}
         <aside className="space-y-6 overflow-y-auto hidden lg:block">
           <SkillMonitor skills={activeSkills} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { LoginForm } from '../components/auth/LoginForm';
 import { Bot } from 'lucide-react';
 
@@ -23,7 +23,7 @@ export function LoginPage() {
           <p className="mt-2 text-sm text-slate-400">
             ¿No tienes una cuenta?{' '}
             <Link
-              to="/signup"
+              href="/signup"
               className="font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
             >
               Regístrate gratis

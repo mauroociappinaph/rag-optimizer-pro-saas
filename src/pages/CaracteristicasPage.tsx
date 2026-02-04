@@ -1,8 +1,10 @@
+'use client';
+
 import { motion } from 'framer-motion';
-import { 
-  Brain, 
-  Layers, 
-  Scissors, 
+import {
+  Brain,
+  Layers,
+  Scissors,
   ListOrdered,
   Cpu,
   Gauge,
@@ -22,7 +24,7 @@ export function CaracteristicasPage() {
       {/* Hero */}
       <section className="relative py-24 bg-gradient-to-br from-slate-950 via-slate-900 to-purple-950 overflow-hidden">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        
+
         <div className="relative max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -61,17 +63,17 @@ export function CaracteristicasPage() {
                   <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${feature.gradient} mb-6`}>
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
-                  
+
                   <h2 className="text-3xl font-bold text-white mb-2">{feature.title}</h2>
                   <p className="text-lg text-slate-400 mb-4">{feature.subtitle}</p>
-                  
+
                   <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-800 rounded-lg text-sm text-slate-300 mb-6">
                     <Cpu className="w-3 h-3" />
                     {feature.tech}
                   </div>
-                  
+
                   <p className="text-slate-300 mb-6">{feature.description}</p>
-                  
+
                   <ul className="space-y-3 mb-8">
                     {feature.features.map((item, i) => (
                       <li key={i} className="flex items-start gap-3 text-slate-400">
@@ -80,13 +82,13 @@ export function CaracteristicasPage() {
                       </li>
                     ))}
                   </ul>
-                  
+
                   <button className="group inline-flex items-center gap-2 text-red-400 hover:text-red-300 font-medium">
                     Ver documentación técnica
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
-                
+
                 <div className={`relative ${index % 2 === 1 ? 'md:order-1' : ''}`}>
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-10 blur-3xl`} />
                   <div className="relative bg-slate-900/50 border border-slate-800 rounded-3xl p-8">
@@ -98,7 +100,7 @@ export function CaracteristicasPage() {
                       </p>
                       <p className="text-slate-400">{feature.impactLabel}</p>
                     </div>
-                    
+
                     <div className="mt-8 pt-8 border-t border-slate-800">
                       <div className="flex justify-around text-center">
                         <div>

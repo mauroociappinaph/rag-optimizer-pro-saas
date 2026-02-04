@@ -1,10 +1,12 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Users, Calendar, Trophy, ArrowRight, ExternalLink, Heart, Star, MessageSquare, Github } from 'lucide-react';
-import { 
-  COMMUNITY_CHANNELS, 
-  COMMUNITY_EVENTS, 
-  COMMUNITY_CONTRIBUTORS, 
-  COMMUNITY_RESOURCES 
+import {
+  COMMUNITY_CHANNELS,
+  COMMUNITY_EVENTS,
+  COMMUNITY_CONTRIBUTORS,
+  COMMUNITY_RESOURCES
 } from '../data/community-data';
 import { CommunityChannel, CommunityEvent, CommunityContributor, CommunityResource } from '../types';
 
@@ -30,7 +32,7 @@ export function ComunidadPage() {
               </span>
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Más de 20,000 desarrolladores, científicos de datos e ingenieros de ML 
+              Más de 20,000 desarrolladores, científicos de datos e ingenieros de ML
               colaborando para optimizar aplicaciones de IA.
             </p>
             <div className="flex flex-wrap justify-center gap-8">
@@ -233,7 +235,7 @@ export function ComunidadPage() {
               Construyamos juntos el futuro del RAG
             </h2>
             <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
-              Ya sea que quieras hacer preguntas, compartir conocimiento o contribuir código, 
+              Ya sea que quieras hacer preguntas, compartir conocimiento o contribuir código,
               hay un lugar para ti en nuestra comunidad.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

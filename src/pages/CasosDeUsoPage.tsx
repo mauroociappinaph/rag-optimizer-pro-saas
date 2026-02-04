@@ -1,6 +1,8 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Briefcase, ArrowRight, CheckCircle, Quote } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { USE_CASES } from '../data/use-cases';
 
 export function CasosDeUsoPage() {
@@ -25,7 +27,7 @@ export function CasosDeUsoPage() {
               </span>
             </h1>
             <p className="text-xl text-gray-400">
-              Descubre cómo empresas de diferentes sectores utilizan RAGOptimizer 
+              Descubre cómo empresas de diferentes sectores utilizan RAGOptimizer
               para transformar sus aplicaciones de IA.
             </p>
           </motion.div>
@@ -56,7 +58,7 @@ export function CasosDeUsoPage() {
                       <p className="text-gray-400">{caso.subtitulo}</p>
                     </div>
                   </div>
-                  
+
                   <p className="text-gray-300 mb-6">{caso.descripcion}</p>
 
                   {/* Desafíos y Soluciones */}
@@ -158,14 +160,14 @@ export function CasosDeUsoPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/contacto"
+                href="/contacto"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
               >
                 Solicitar Demo
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
-                to="/precios"
+                href="/precios"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 text-white rounded-lg font-semibold hover:bg-white/20 transition-colors"
               >
                 Ver Precios

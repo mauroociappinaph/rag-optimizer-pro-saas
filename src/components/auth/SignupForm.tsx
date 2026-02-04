@@ -4,7 +4,7 @@ import React, { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Mail, Lock, Loader2, ArrowRight, User } from 'lucide-react';
 import { signUpApi } from '../../utils/api-client';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { analytics } from '../../utils/analytics';
 
 function SubmitButton() {
@@ -35,7 +35,7 @@ function SubmitButton() {
 }
 
 export function SignupForm() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [state, formAction] = useActionState(
     async (prevState: any, formData: FormData) => {
@@ -44,22 +44,22 @@ export function SignupForm() {
       const confirmPassword = formData.get('confirm-password') as string;
 
       if (password !== confirmPassword) {
-        return { error: 'Las contraseñas no coinciden' };
+        return { error: 'Las contraseñas no coinciden', success: false };
       }
 
       try {
         analytics.track('auth_signup_attempt', { email });
         const result = await signUpApi(email, password);
         if (result.error) {
-          return { error: result.error.message };
+          return { error: result.error.message, success: false };
         }
-        // Signup usually doesn't log in automatically in some flows, 
+        // Signup usually doesn't log in automatically in some flows,
         // but here we expect the user to maybe verify email or log in.
         // For now, let's redirect to login.
-        navigate('/login');
-        return { success: true };
+        router.push('/login');
+        return { success: true, error: null };
       } catch (err: any) {
-        return { error: err.message || 'Error inesperado al registrarse' };
+        return { error: err.message || 'Error inesperado al registrarse', success: false };
       }
     },
     { error: null, success: false }

@@ -4,7 +4,7 @@ import React, { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Mail, Lock, Loader2, ArrowRight } from 'lucide-react';
 import { loginApi } from '../../utils/api-client';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { analytics } from '../../utils/analytics';
 
 function SubmitButton() {
@@ -35,7 +35,7 @@ function SubmitButton() {
 }
 
 export function LoginForm() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const [state, formAction] = useActionState(
     async (prevState: any, formData: FormData) => {
@@ -46,17 +46,17 @@ export function LoginForm() {
         analytics.track('auth_login_attempt', { email });
         const result = await loginApi(email, password);
         if (result.error) {
-          return { error: result.error.message };
+          return { error: result.error.message, success: false };
         }
         // Store token in localStorage or context
         if (result.data?.session.access_token) {
           localStorage.setItem('auth_token', result.data.session.access_token);
           analytics.identify(email, { auth_method: 'standard' });
         }
-        navigate('/dashboard');
-        return { success: true };
+        router.push('/dashboard');
+        return { success: true, error: null };
       } catch (err: any) {
-        return { error: err.message || 'Error inesperado al iniciar sesión' };
+        return { error: err.message || 'Error inesperado al iniciar sesión', success: false };
       }
     },
     { error: null, success: false }

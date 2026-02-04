@@ -1,5 +1,8 @@
+'use client';
+
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Database, Menu, X, ChevronDown } from 'lucide-react';
 
@@ -30,7 +33,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [recursosOpen, setRecursosOpen] = useState(false);
   const [empresaOpen, setEmpresaOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
@@ -38,7 +41,7 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2">
               <div className="p-2 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl">
                 <Database className="w-5 h-5 text-white" />
               </div>
@@ -50,9 +53,9 @@ export function Navbar() {
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
-                  to={link.href}
+                  href={link.href}
                   className={`text-sm font-medium transition-colors ${
-                    location.pathname === link.href
+                    pathname === link.href
                       ? 'text-white'
                       : 'text-slate-400 hover:text-white'
                   }`}
@@ -60,7 +63,7 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              
+
               {/* Recursos Dropdown */}
               <div className="relative">
                 <button
@@ -71,7 +74,7 @@ export function Navbar() {
                   Recursos
                   <ChevronDown className={`w-4 h-4 transition-transform ${recursosOpen ? 'rotate-180' : ''}`} />
                 </button>
-                
+
                 <AnimatePresence>
                   {recursosOpen && (
                     <motion.div
@@ -83,7 +86,7 @@ export function Navbar() {
                       {recursosLinks.map((link) => (
                         <Link
                           key={link.href}
-                          to={link.href}
+                          href={link.href}
                           onClick={() => setRecursosOpen(false)}
                           className="block px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
                         >
@@ -94,7 +97,7 @@ export function Navbar() {
                   )}
                 </AnimatePresence>
               </div>
-              
+
               {/* Empresa Dropdown */}
               <div className="relative">
                 <button
@@ -105,7 +108,7 @@ export function Navbar() {
                   Empresa
                   <ChevronDown className={`w-4 h-4 transition-transform ${empresaOpen ? 'rotate-180' : ''}`} />
                 </button>
-                
+
                 <AnimatePresence>
                   {empresaOpen && (
                     <motion.div
@@ -117,7 +120,7 @@ export function Navbar() {
                       {empresaLinks.map((link) => (
                         <Link
                           key={link.href}
-                          to={link.href}
+                          href={link.href}
                           onClick={() => setEmpresaOpen(false)}
                           className="block px-4 py-3 text-sm text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
                         >
@@ -132,10 +135,10 @@ export function Navbar() {
 
             {/* CTA Buttons */}
             <div className="hidden md:flex items-center gap-4">
-              <Link to="/login" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">
+              <Link href="/login" className="text-slate-400 hover:text-white transition-colors text-sm font-medium">
                 Iniciar Sesión
               </Link>
-              <Link to="/signup" className="px-4 py-2 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium text-sm rounded-lg hover:from-red-500 hover:to-orange-500 transition-all">
+              <Link href="/signup" className="px-4 py-2 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium text-sm rounded-lg hover:from-red-500 hover:to-orange-500 transition-all">
                 Comenzar Gratis
               </Link>
             </div>
@@ -164,10 +167,10 @@ export function Navbar() {
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
-                  to={link.href}
+                  href={link.href}
                   onClick={() => setIsOpen(false)}
                   className={`block font-medium transition-colors ${
-                    location.pathname === link.href
+                    pathname === link.href
                       ? 'text-white'
                       : 'text-slate-400 hover:text-white'
                   }`}
@@ -175,14 +178,14 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              
+
               {/* Recursos Section Mobile */}
               <div className="pt-2 border-t border-slate-800">
                 <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Recursos</p>
                 {recursosLinks.map((link) => (
                   <Link
                     key={link.href}
-                    to={link.href}
+                    href={link.href}
                     onClick={() => setIsOpen(false)}
                     className={`block py-2 font-medium transition-colors ${
                       location.pathname === link.href
@@ -194,14 +197,14 @@ export function Navbar() {
                   </Link>
                 ))}
               </div>
-              
+
               {/* Empresa Section Mobile */}
               <div className="pt-2 border-t border-slate-800">
                 <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Empresa</p>
                 {empresaLinks.map((link) => (
                   <Link
                     key={link.href}
-                    to={link.href}
+                    href={link.href}
                     onClick={() => setIsOpen(false)}
                     className={`block py-2 font-medium transition-colors ${
                       location.pathname === link.href
@@ -213,17 +216,17 @@ export function Navbar() {
                   </Link>
                 ))}
               </div>
-              
+
               <div className="pt-4 border-t border-slate-800 space-y-3">
                 <Link
-                  to="/login"
+                  href="/login"
                   onClick={() => setIsOpen(false)}
                   className="block w-full text-slate-400 hover:text-white transition-colors font-medium text-left"
                 >
                   Iniciar Sesión
                 </Link>
                 <Link
-                  to="/signup"
+                  href="/signup"
                   onClick={() => setIsOpen(false)}
                   className="block w-full px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white font-medium rounded-lg text-center"
                 >

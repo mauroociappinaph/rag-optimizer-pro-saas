@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Link2, Database, Blocks, FileText } from 'lucide-react';
 
@@ -59,14 +61,14 @@ export function Integrations() {
             >
               <div className="relative bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-3xl p-8 hover:border-slate-600 transition-all h-full">
                 <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-br ${integration.color} opacity-5 blur-3xl group-hover:opacity-10 transition-opacity`} />
-                
+
                 <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${integration.color} mb-6`}>
                   <integration.icon className="w-8 h-8 text-white" />
                 </div>
-                
+
                 <h3 className="text-2xl font-bold text-white mb-3">{integration.name}</h3>
                 <p className="text-slate-400 mb-6">{integration.description}</p>
-                
+
                 <div className="flex flex-wrap gap-2">
                   {integration.features.map((feature, i) => (
                     <span key={i} className="px-3 py-1 bg-slate-700/50 rounded-lg text-sm text-slate-300">

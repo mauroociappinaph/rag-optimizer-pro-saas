@@ -1,7 +1,9 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Book, Clock, ArrowRight, Search, Filter, BookOpen, Code, Database, Zap, Shield, BarChart } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 import { GUIDES_CATEGORIES as categorias, GUIDES_LEVELS as niveles, GUIDES as guias } from '../data/guides';
 
@@ -45,7 +47,7 @@ export function GuiasPage() {
               Guías y <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Tutoriales</span>
             </h1>
             <p className="text-xl text-gray-400">
-              Aprende a dominar RAGOptimizer con nuestras guías paso a paso, 
+              Aprende a dominar RAGOptimizer con nuestras guías paso a paso,
               desde conceptos básicos hasta configuraciones avanzadas.
             </p>
           </motion.div>
@@ -121,7 +123,7 @@ export function GuiasPage() {
                       {guia.nivel}
                     </span>
                   </div>
-                  
+
                   <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
                     <guia.icon className="w-4 h-4" />
                     <span>{guia.categoria}</span>
@@ -129,14 +131,14 @@ export function GuiasPage() {
                     <Clock className="w-4 h-4" />
                     <span>{guia.tiempo}</span>
                   </div>
-                  
+
                   <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-orange-400 transition-colors">
                     {guia.titulo}
                   </h3>
                   <p className="text-gray-400 text-sm mb-4">
                     {guia.descripcion}
                   </p>
-                  
+
                   <div className="flex items-center text-orange-400 text-sm font-medium group-hover:gap-2 transition-all">
                     <span>Leer guía</span>
                     <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
@@ -165,13 +167,13 @@ export function GuiasPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/contacto"
+              href="/contacto"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
               Contactar Soporte
             </Link>
             <Link
-              to="/comunidad"
+              href="/comunidad"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white/10 text-white rounded-lg font-semibold hover:bg-white/20 transition-colors"
             >
               Unirse a la Comunidad

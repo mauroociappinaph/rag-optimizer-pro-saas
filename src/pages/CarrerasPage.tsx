@@ -1,24 +1,26 @@
+'use client';
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Briefcase, Clock, DollarSign, ChevronDown, ChevronUp, Heart, Zap, Users, Globe, Coffee, Laptop, Plane, GraduationCap } from 'lucide-react';
 
-import { 
-  JOB_DEPARTMENTS as departments, 
-  JOB_BENEFITS as benefits, 
-  JOBS as jobs 
+import {
+  JOB_DEPARTMENTS as departments,
+  JOB_BENEFITS as benefits,
+  JOBS as jobs
 } from '../data/jobs';
 
 export function CarrerasPage() {
   const [selectedDepartment, setSelectedDepartment] = useState('Todos');
   const [expandedJob, setExpandedJob] = useState<number | null>(null);
 
-  const filteredJobs = jobs.filter(job => 
+  const filteredJobs = jobs.filter(job =>
     selectedDepartment === 'Todos' || job.department === selectedDepartment
   );
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
-      
+
       {/* Hero */}
       <section className="pt-32 pb-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
@@ -36,7 +38,7 @@ export function CarrerasPage() {
             transition={{ delay: 0.1 }}
             className="text-xl text-gray-400 max-w-3xl mx-auto mb-8"
           >
-            Estamos construyendo el futuro de la optimización de IA. 
+            Estamos construyendo el futuro de la optimización de IA.
             Buscamos personas talentosas y apasionadas para unirse a nuestro equipo global.
           </motion.p>
           <motion.div
@@ -183,7 +185,7 @@ export function CarrerasPage() {
                   >
                     <div className="pt-6">
                       <p className="text-gray-300 mb-6">{job.description}</p>
-                      
+
                       <div className="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
                           <h4 className="font-bold mb-3 text-red-500">Requisitos</h4>

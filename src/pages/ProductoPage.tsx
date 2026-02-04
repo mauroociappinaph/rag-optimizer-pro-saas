@@ -1,12 +1,14 @@
+'use client';
+
 import { motion } from 'framer-motion';
-import { 
-  Database, 
-  Cpu, 
-  Zap, 
-  Shield, 
-  Cloud, 
-  BarChart3, 
-  Lock, 
+import {
+  Database,
+  Cpu,
+  Zap,
+  Shield,
+  Cloud,
+  BarChart3,
+  Lock,
   RefreshCw,
   ArrowRight,
   Check,
@@ -60,7 +62,7 @@ export function ProductoPage() {
       <section className="relative py-24 bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 overflow-hidden">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
         <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-red-500/20 rounded-full blur-3xl" />
-        
+
         <div className="relative max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -222,7 +224,7 @@ export function ProductoPage() {
                 ))}
               </ul>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}

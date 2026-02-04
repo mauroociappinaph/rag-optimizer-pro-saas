@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Code, Copy, Check, Search } from 'lucide-react';
 import { useState } from 'react';
@@ -44,7 +46,7 @@ export function ApiReferencePage() {
               API <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">Reference</span>
             </h1>
             <p className="text-xl text-gray-400 mb-6">
-              Documentación completa de la API REST de RAGOptimizer. 
+              Documentación completa de la API REST de RAGOptimizer.
               Integra optimización de RAG en tus aplicaciones.
             </p>
             <div className="flex items-center gap-4 text-sm">

@@ -1,11 +1,13 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Shield, Lock, Key, Server, Eye, FileCheck, AlertTriangle, CheckCircle, Award, ExternalLink } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
-import { 
-  SECURITY_CERTIFICATIONS as certificaciones, 
-  SECURITY_MEASURES as medidasSeguridad, 
-  SECURITY_PRACTICES as practicas 
+import {
+  SECURITY_CERTIFICATIONS as certificaciones,
+  SECURITY_MEASURES as medidasSeguridad,
+  SECURITY_PRACTICES as practicas
 } from '../data/security';
 
 export function SeguridadPage() {
@@ -30,7 +32,7 @@ export function SeguridadPage() {
               </span>
             </h1>
             <p className="text-xl text-gray-400">
-              RAGOptimizer está diseñado desde cero con seguridad enterprise-grade. 
+              RAGOptimizer está diseñado desde cero con seguridad enterprise-grade.
               Protegemos tus datos con los más altos estándares de la industria.
             </p>
           </motion.div>
@@ -153,7 +155,7 @@ export function SeguridadPage() {
               <div className="text-center md:text-left">
                 <h2 className="text-2xl font-bold text-white mb-3">Reportar una Vulnerabilidad</h2>
                 <p className="text-gray-400 mb-6">
-                  Si descubres una vulnerabilidad de seguridad, por favor repórtala de manera 
+                  Si descubres una vulnerabilidad de seguridad, por favor repórtala de manera
                   responsable. Ofrecemos recompensas a través de nuestro programa Bug Bounty.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
@@ -186,7 +188,7 @@ export function SeguridadPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/contacto"
+              href="/contacto"
               className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
               Hablar con Seguridad

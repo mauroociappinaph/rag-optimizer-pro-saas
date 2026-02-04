@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Database, Github, Twitter, Linkedin } from 'lucide-react';
 
 const footerLinks = {
@@ -35,7 +35,7 @@ export function Footer() {
         <div className="grid md:grid-cols-6 gap-12 mb-12">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-2 mb-4">
+            <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="p-2 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl">
                 <Database className="w-5 h-5 text-white" />
               </div>
@@ -64,7 +64,7 @@ export function Footer() {
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link to={link.href} className="text-slate-400 hover:text-white transition-colors text-sm">
+                    <Link href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm">
                       {link.label}
                     </Link>
                   </li>

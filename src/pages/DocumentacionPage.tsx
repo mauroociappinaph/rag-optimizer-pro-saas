@@ -1,9 +1,11 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { 
-  Book, 
-  Code, 
-  Zap, 
+import {
+  Book,
+  Code,
+  Zap,
   Database,
   Search,
   Terminal,
@@ -15,10 +17,10 @@ import {
   ExternalLink
 } from 'lucide-react';
 
-import { 
-  DOCUMENTATION_SECTIONS as sections, 
-  DOCUMENTATION_EXAMPLES as codeExamples, 
-  DOCUMENTATION_TEXTS as documentationTexts 
+import {
+  DOCUMENTATION_SECTIONS as sections,
+  DOCUMENTATION_EXAMPLES as codeExamples,
+  DOCUMENTATION_TEXTS as documentationTexts
 } from '../data/documentation';
 
 export function DocumentacionPage() {
@@ -38,7 +40,7 @@ export function DocumentacionPage() {
       {/* Hero */}
       <section className="relative py-16 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 overflow-hidden">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        
+
         <div className="relative max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -57,11 +59,11 @@ export function DocumentacionPage() {
                 Todo lo que necesitas para integrar RAG Optimizer en tu proyecto
               </p>
             </div>
-            
+
             <div className="hidden md:flex items-center gap-4">
               <div className="relative">
                 <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                <input 
+                <input
                   type="text"
                   placeholder="Buscar en la documentación..."
                   className="pl-10 pr-4 py-2 bg-slate-800/50 border border-slate-700 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 w-64"

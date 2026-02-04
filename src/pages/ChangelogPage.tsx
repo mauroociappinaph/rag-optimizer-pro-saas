@@ -1,8 +1,10 @@
+'use client';
+
 import { motion } from 'framer-motion';
-import { 
-  Sparkles, 
-  Bug, 
-  Zap, 
+import {
+  Sparkles,
+  Bug,
+  Zap,
   Shield,
   ArrowUp,
   Tag,
@@ -44,7 +46,7 @@ export function ChangelogPage() {
       {/* Hero */}
       <section className="relative py-24 bg-gradient-to-br from-slate-950 via-slate-900 to-pink-950 overflow-hidden">
         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
-        
+
         <div className="relative max-w-4xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -80,8 +82,8 @@ export function ChangelogPage() {
               </p>
             </div>
             <div className="flex gap-2">
-              <input 
-                type="email" 
+              <input
+                type="email"
                 placeholder="tu@email.com"
                 className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder:text-slate-500 focus:outline-none focus:border-purple-500"
               />
@@ -112,8 +114,8 @@ export function ChangelogPage() {
                 >
                   {/* Timeline dot */}
                   <div className={`absolute left-0 w-12 h-12 rounded-full flex items-center justify-center ${
-                    release.type === 'major' 
-                      ? 'bg-gradient-to-br from-purple-500 to-pink-500' 
+                    release.type === 'major'
+                      ? 'bg-gradient-to-br from-purple-500 to-pink-500'
                       : release.type === 'minor'
                       ? 'bg-blue-500/20 border-2 border-blue-500'
                       : 'bg-slate-800 border-2 border-slate-600'
@@ -173,7 +175,7 @@ export function ChangelogPage() {
           <div className="p-8 bg-slate-800/30 border border-slate-700/50 rounded-2xl">
             <h3 className="text-xl font-bold text-white mb-4">Sobre nuestro versionado</h3>
             <p className="text-slate-400 mb-6">
-              Seguimos <a href="#" className="text-purple-400 hover:underline">Semantic Versioning 2.0.0</a>. 
+              Seguimos <a href="#" className="text-purple-400 hover:underline">Semantic Versioning 2.0.0</a>.
               Esto significa:
             </p>
             <div className="grid md:grid-cols-3 gap-6">
