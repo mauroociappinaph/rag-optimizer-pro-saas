@@ -1,4 +1,7 @@
-[00:00:00.743] Server  LOG     ✓ Ready in 519ms
-[00:09:30.481] Server  ERROR   Error: ENOENT: no such file or directory, scandir '/Users/mauroociappina/Desktop/New/rag-pipeline-optimizacin-saas/src/pages'
-[00:09:30.492] Server  ERROR   ⨯ "unhandledRejection:" Error: ENOENT: no such file or directory, scandir '/Users/mauroociappina/Desktop/New/rag-pipeline-optimizacin-saas/src/pages'
-[00:09:30.498] Server  ERROR   ⨯ "unhandledRejection: " Error: ENOENT: no such file or directory, scandir '/Users/mauroociappina/Desktop/New/rag-pipeline-optimizacin-saas/src/pages'
+[00:00:01.085] Server  LOG     ✓ Ready in 753ms
+[00:03:36.210] Server  LOG     ○ Compiling / ...
+[00:04:11.562] Server  LOG     ✓ Finished writing to filesystem cache in 15.2s
+[00:04:26.045] Server  LOG     ○ Compiling /caracteristicas ...
+[00:04:43.293] Server  LOG     ✓ Finished writing to filesystem cache in 12.0s
+[00:04:49.565] Server  LOG     ○ Compiling /precios ...
+[00:05:05.263] Server  LOG     ✓ Compiled in 102ms

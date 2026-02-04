@@ -90,3 +90,24 @@ export async function getTelemetryStatsApi() {
   return response.json();
 }
 
+export async function createBillingPortalApi(customerId: string) {
+  const response = await fetch(`${API_BASE_URL}/payments/create-portal`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      customerId,
+      returnUrl: `${window.location.origin}/#/dashboard`,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Failed to create billing portal session');
+  }
+
+  return response.json();
+}
+
+

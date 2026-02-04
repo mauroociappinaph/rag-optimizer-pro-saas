@@ -1,4 +1,4 @@
-import { TerminosPage } from "@/pages/TerminosPage";
+import { TerminosPage } from "@/views/TerminosPage";
 
 export default function Terminos() {
   return <TerminosPage />;

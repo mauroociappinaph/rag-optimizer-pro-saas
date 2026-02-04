@@ -43,6 +43,17 @@ export class PaymentService implements OnModuleInit {
     return { url: session.url };
   }
 
+  async createBillingPortalSession(customerId: string, returnUrl: string) {
+    if (!this.stripe) throw new Error('Stripe is not configured');
+
+    const session = await this.stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: returnUrl,
+    });
+
+    return { url: session.url };
+  }
+
   async handleWebhook(rawBody: Buffer, signature: string) {
     const webhookSecret = this.configService.get<string>('STRIPE_WEBHOOK_SECRET');
     let event: Stripe.Event;

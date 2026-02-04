@@ -1,4 +1,4 @@
-import { DocumentacionPage } from "@/pages/DocumentacionPage";
+import { DocumentacionPage } from "@/views/DocumentacionPage";
 
 export default function Documentacion() {
   return <DocumentacionPage />;

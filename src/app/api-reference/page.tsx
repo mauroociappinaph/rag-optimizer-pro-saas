@@ -1,4 +1,4 @@
-import { ApiReferencePage } from "@/pages/ApiReferencePage";
+import { ApiReferencePage } from "@/views/ApiReferencePage";
 
 export default function ApiReference() {
   return <ApiReferencePage />;

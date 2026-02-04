@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/Desktop/New/rag-pipeline-optimizacin-saas/src/app/globals.css"],"sourcesContent":["@import \"tailwindcss\";\n\n:root {\n  --background: #020617;\n  --foreground: #f8fafc;\n}\n\nbody {\n  color: var(--foreground);\n  background: var(--background);\n  font-family: var(--font-inter), sans-serif;\n}\n"],"names":[],"mappings":"AAEA;;;;;AAKA"}}]
+}

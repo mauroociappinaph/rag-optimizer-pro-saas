@@ -1,4 +1,4 @@
-import { CookiesPage } from "@/pages/CookiesPage";
+import { CookiesPage } from "@/views/CookiesPage";
 
 export default function Cookies() {
   return <CookiesPage />;

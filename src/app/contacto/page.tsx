@@ -1,4 +1,4 @@
-import { ContactoPage } from "@/pages/ContactoPage";
+import { ContactoPage } from "@/views/ContactoPage";
 
 export default function Contacto() {
   return <ContactoPage />;

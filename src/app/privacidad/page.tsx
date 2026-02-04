@@ -1,4 +1,4 @@
-import { PrivacidadPage } from "@/pages/PrivacidadPage";
+import { PrivacidadPage } from "@/views/PrivacidadPage";
 
 export default function Privacidad() {
   return <PrivacidadPage />;

@@ -17,6 +17,16 @@ export class PaymentController {
     );
   }
 
+  @Post('create-portal')
+  async createPortal(
+    @Body() body: { customerId: string; returnUrl: string }
+  ) {
+    return this.paymentService.createBillingPortalSession(
+      body.customerId,
+      body.returnUrl
+    );
+  }
+
   @Post('webhook')
   async handleWebhook(
     @Req() req: RawBodyRequest<Request>,

@@ -1,0 +1,13 @@
+/* [project]/Desktop/New/rag-pipeline-optimizacin-saas/src/app/globals.css [app-client] (css) */
+:root {
+  --background: #020617;
+  --foreground: #f8fafc;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/*# sourceMappingURL=Desktop_New_rag-pipeline-optimizacin-saas_src_app_globals_css_bad6b30c._.single.css.map*/

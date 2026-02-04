@@ -1,4 +1,4 @@
-import { CaracteristicasPage } from "@/pages/CaracteristicasPage";
+import { CaracteristicasPage } from "@/views/CaracteristicasPage";
 
 export default function Caracteristicas() {
   return <CaracteristicasPage />;

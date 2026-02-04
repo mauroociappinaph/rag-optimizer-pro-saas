@@ -1,4 +1,4 @@
-import { SeguridadPage } from "@/pages/SeguridadPage";
+import { SeguridadPage } from "@/views/SeguridadPage";
 
 export default function Seguridad() {
   return <SeguridadPage />;
