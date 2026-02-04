@@ -1,6 +1,6 @@
 import { CreateLeadDto, AuthResponseDto, ApiResponse } from '../../backend/nestjs-api/src/auth/auth.contracts';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_BASE_URL = (typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_API_URL : '') || 'http://localhost:3000';
 
 export async function captureLeadApi(dto: CreateLeadDto) {
   const response = await fetch(`${API_BASE_URL}/leads`, {

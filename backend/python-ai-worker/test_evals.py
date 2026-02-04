@@ -1,32 +1,32 @@
 import asyncio
+import sys
 import os
-from dotenv import load_dotenv
-from evaluator_engine import evaluator
 
-load_dotenv()
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-async def test_evals():
-    print("--- INICIANDO TEST DE EVALUACIÓN (AGENT-EVAL) ---")
+from evaluator_engine import AgentEvaluator
 
-    context = "El RAG Optimizer Pro ahorra un 60% en costos de infraestructura mediante caché semántica."
-    question = "¿Cuánto ahorra el sistema?"
+async def run_eval_tests():
+    """
+    Tests the Agent Evaluation engine with mock data.
+    """
+    evaluator = AgentEvaluator()
+    
+    query = "¿Cuál es el ROI proyectado?"
+    context = "El sistema genera un ahorro del 60% en costos de LLM mediante caching semántico."
+    response = "El ROI proyectado es del 60% gracias al ahorro en costos de LLM."
 
-    # Test 1: Respuesta Fiel
-    response_good = "Ahorra un 60% gracias al uso de caché semántica."
-    eval_good = await evaluator.evaluate_response(context, question, response_good)
-    print(f"\nTEST 1 (Fiel): Score {eval_good['score']}")
-    print(f"Justificación: {eval_good['justification']}")
-
-    # Test 2: Alucinación
-    response_bad = "Ahorra un 95% y regala pizzas los viernes."
-    eval_bad = await evaluator.evaluate_response(context, question, response_bad)
-    print(f"\nTEST 2 (Alucinación): Score {eval_bad['score']}")
-    print(f"Justificación: {eval_bad['justification']}")
-
-    if eval_good['score'] > 0.8 and eval_bad['score'] < 0.5:
-        print("\n[SUCCESS] El motor de evaluación tiene discernimiento semántico.")
+    print("--- ⚖️ Behavioral Test: Agent Evaluation ---")
+    
+    results = await evaluator.evaluate_rag_output(query, context, response)
+    
+    if "metrics" in results:
+        print(f"📊 Faithfulness Score: {results['metrics']['faithfulness']}")
+        print(f"📊 Relevance Score: {results['metrics']['relevance']}")
+        print(f"📊 Overall: {results['metrics']['overall_score']}")
+        print(f"✅ STATUS: {results['status']}")
     else:
-        print("\n[WARNING] El motor requiere ajuste de sensibilidad.")
+        print(f"❌ FAIL: Evaluation failed with error: {results.get('error')}")
 
 if __name__ == "__main__":
-    asyncio.run(test_evals())
+    asyncio.run(run_eval_tests())

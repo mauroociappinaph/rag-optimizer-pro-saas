@@ -6,8 +6,16 @@ from langgraph.prebuilt import create_react_agent
 from langchain_core.tools import tool
 
 from realtime_reporter import report_skill_activation
+from evaluator_engine import evaluator_engine
 
 # --- Tools for the Admin Specialist (Skills Integration) ---
+
+@tool
+async def run_agent_audit(query: str, context: str, response: str):
+    """Certifies the quality of a specific RAG response using statistical scoring."""
+    await report_skill_activation("agent-evaluation")
+    results = await evaluator_engine.evaluate_rag_output(query, context, response)
+    return results
 
 @tool
 async def get_system_health():

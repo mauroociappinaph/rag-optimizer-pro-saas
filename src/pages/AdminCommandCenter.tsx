@@ -35,18 +35,28 @@ export function AdminCommandCenter() {
     { label: "Semantic Cache", status: "optimized", value: "82% Hit" },
   ];
   const [input, setInput] = useState('');
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const [isThinking, setIsThinking] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const newSocket = io('http://localhost:3000/admin');
-    setSocket(newSocket);
-    newSocket.on('agent_response', (msg: AdminMessage) => {
-      setIsThinking(false);
-      setMessages(prev => [...prev, { ...msg, timestamp: new Date(msg.timestamp) }]);
-    });
-    newSocket.on('skill_activated', (data: { skill: string, status: string }) => {
+    const [socket, setSocket] = useState<Socket | null>(null);
+    const [isThinking, setIsThinking] = useState(false);
+    const [confidenceScore, setConfidenceScore] = useState(0.95);
+    const chatEndRef = useRef<HTMLDivElement>(null);
+  
+    useEffect(() => {
+      const newSocket = io('http://localhost:3000/admin');
+      setSocket(newSocket);
+  
+      newSocket.on('agent_response', (msg: AdminMessage) => {
+        setIsThinking(false);
+        setMessages(prev => [...prev, { ...msg, timestamp: new Date(msg.timestamp) }]);
+      });
+  
+      newSocket.on('telemetry_event', (data: any) => {
+        if (data.event === 'agent_evaluation' && data.properties?.score) {
+          setConfidenceScore(data.properties.score);
+        }
+      });
+  
+      newSocket.on('skill_activated', (data: { skill: string, status: string }) => {
+  
       setActiveSkills(prev => prev.map(s => s.name === data.skill ? { ...s, status: data.status as any } : s));
       if (data.status === 'executing') {
         setTimeout(() => setActiveSkills(prev => prev.map(s => s.name === data.skill ? { ...s, status: 'idle' } : s)), 4000);
@@ -122,8 +132,10 @@ export function AdminCommandCenter() {
             <div className="space-y-6">
               <MetricWidget label="Gasto Proyectado" value="$0.18" subValue="-45% vs ayer" icon={DollarSign} color="text-yellow-400" />
               <MetricWidget label="Tokens Procesados" value="1.2M" subValue="Eficiencia: Alta" icon={Cpu} color="text-blue-400" />
+              <MetricWidget label="Nivel de Confianza (IA)" value={`${(confidenceScore * 100).toFixed(1)}%`} subValue="Faithfulness Certified" icon={ShieldCheck} color="text-emerald-400" />
               <MetricWidget label="Ahorro Real (ROI)" value="$4.50" subValue="Por Semantic Cache" icon={TrendingUp} color="text-emerald-400" />
             </div>
+
           </div>
           <div className="bg-gradient-to-br from-indigo-600/20 to-purple-600/20 backdrop-blur-xl border border-indigo-500/30 rounded-3xl p-6 text-center">
             <ShieldCheck className="w-12 h-12 text-indigo-400 mx-auto mb-4" />
